@@ -1,6 +1,6 @@
 package sample.algorithm;
 
-import View.View;
+import view.View;
 import sample.individual.Individual;
 import sample.individual.Particle;
 

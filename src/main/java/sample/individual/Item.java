@@ -14,6 +14,7 @@ public class Item implements Element {
 		this.ImageFile = ImageFile;
 	}
 
+
 	public double getWeight() {
 		return this.weight;
 	}

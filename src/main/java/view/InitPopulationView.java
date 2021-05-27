@@ -10,15 +10,18 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
+import java.io.IOException;
+
 public class InitPopulationView extends View{
 
     public Parent initView() {
         Text test = new Text("Hello World");
         Button next = new Button("next");
-        next.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
+        next.setOnAction(actionEvent -> {
+            try {
                 ViewSwitcher.switchTo(new MainMenuView());
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         });
 

@@ -1,7 +1,9 @@
-module Optimization1 {
+module Optimization {
     requires javafx.controls;
     requires javafx.fxml;
+    requires javafx.swing;
 
-    opens sample to javafx.fxml;
-    exports sample;
+    opens controller to javafx.fxml;
+    opens model to javafx.fxml;
+    exports model;
 }

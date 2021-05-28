@@ -13,8 +13,9 @@ public class GeneticAlgorithm extends HeuristicAlgorithm {
 
 	}
 
-	public void crossover(Individual bp1, Individual bp2) {
-
+	public void crossover(Individual in1, Individual in2) {
+		// swap half of elements from in1 with half of elements from in2
+		for()
 	}
 
 	public void mutate(Individual bp) {

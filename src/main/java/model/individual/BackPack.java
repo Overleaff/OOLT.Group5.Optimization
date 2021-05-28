@@ -26,7 +26,9 @@ public class BackPack implements Individual {
 		return itemsList;
 	}
 
-	public void updateElement(Element e, double weight) {
+	public void updateElement(Element e, double weight, String imgFile)
+	{
 		e.setWeight(weight);
+		e.set
 	}
 }

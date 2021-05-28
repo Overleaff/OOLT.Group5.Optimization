@@ -9,7 +9,7 @@ public class HillClimbingAlgorithm extends HeuristicAlgorithm {
 
 	private Individual bestIndividual;
 
-	public void doOtherSteps() {
+	public Individual doOtherSteps() {
 
 	}
 

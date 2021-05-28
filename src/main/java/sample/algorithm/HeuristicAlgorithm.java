@@ -10,20 +10,17 @@ public abstract class HeuristicAlgorithm implements Algorithm {
 	public static final int MAX_GENERATION = 10;
 
 	public static int GENERATION_LEVEL = 0;
-	private double maxWeight;
 	private List<Individual> population = new ArrayList<Individual>();
 
-	public abstract void doOtherSteps();
+	public abstract Individual doOtherSteps();
 
-	public final Individual solve(Element[] items, double maxWeight) {
+	public final Individual solve(Element[] items) {
 		initPopulation();
-		this.maxWeight = maxWeight;
 		Individual bestInd = getBestIndividual();
 		// continue loop when we not find any satisfy Individual and generationLevel is not enough
 		while(!isSatisfy(bestInd) && GENERATION_LEVEL < MAX_GENERATION){
 			++GENERATION_LEVEL;
-			doOtherSteps();
-			evolve();
+			bestInd = doOtherSteps();
 		}
 		return bestInd;
 	}
@@ -43,7 +40,7 @@ public abstract class HeuristicAlgorithm implements Algorithm {
 		double tmp;
 		Individual resIndividual = new BackPack();
 		for(Individual i : population){
-			tmp = maxWeight - i.getWeight();
+			tmp = BackPack.MAX_WEIGHT - i.getWeight();
 			if(tmp >= 0 && tmp < min){
 				min = tmp;
 				resIndividual = i;
@@ -52,16 +49,10 @@ public abstract class HeuristicAlgorithm implements Algorithm {
 		return resIndividual;
 	}
 
-	public abstract ArrayList<Individual> evolve();
-
 	public boolean isSatisfy(Individual individual) {
 		// kiểm tra xem (maxWeight - weight của bestIndividual) đã nhỏ hơn SATISFY_WEIGHT_LESS chưa,
 		// nếu rồi thì return true; khong thì false
-		return maxWeight - individual.getWeight() <= SATISFY_WEIGHT_LESS;
-	}
-
-	public void switchTo(View view) {
-
+		return BackPack.MAX_WEIGHT - individual.getWeight() <= SATISFY_WEIGHT_LESS;
 	}
 
 }

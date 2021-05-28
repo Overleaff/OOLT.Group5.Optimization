@@ -12,7 +12,7 @@ public class PSOAlgorithm extends HeuristicAlgorithm {
 
 	private Individual bestIndividual;
 
-	public void doOtherSteps() {
+	public Individual doOtherSteps() {
 
 	}
 

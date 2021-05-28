@@ -1,7 +1,6 @@
 package sample.individual;
 
 public class Item implements Element {
-	private static final int MAX_ITEMS = 20;
 	private double weight;
 	private String ImageFile;
 
@@ -25,5 +24,9 @@ public class Item implements Element {
 
 	public void setWeight(double weight){
 		this.weight = weight;
+	}
+
+	public void setImageFile(String imgFile){
+		this.ImageFile = imgFile;
 	}
 }

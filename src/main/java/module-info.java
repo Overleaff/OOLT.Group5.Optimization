@@ -2,6 +2,9 @@ module Optimization1 {
     requires javafx.controls;
     requires javafx.fxml;
 
-    opens sample to javafx.fxml;
-    exports sample;
+    opens controller to javafx.fxml;
+    exports model.individual;
+    exports model.algorithm;
+    exports model;
+    exports view;
 }

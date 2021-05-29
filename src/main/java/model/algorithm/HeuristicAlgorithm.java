@@ -14,8 +14,8 @@ public abstract class HeuristicAlgorithm implements Algorithm {
 
 	public abstract Individual doOtherSteps();
 
-	public final Individual solve(Element[] items) {
-		initPopulation();
+	public final Individual solve(Element[] elements) {
+		initPopulation(elements);
 		Individual bestInd = getBestIndividual();
 		// continue loop when we not find any satisfy Individual and generationLevel is not enough
 		while(!isSatisfy(bestInd) && GENERATION_LEVEL < MAX_GENERATION){
@@ -25,9 +25,9 @@ public abstract class HeuristicAlgorithm implements Algorithm {
 		return bestInd;
 	}
 
-	public void initPopulation() {
+	public void initPopulation(Element[] elements) {
 		for(int i = 0; i < NUM_INDIVIDUAL; i++){
-			population.add(new BackPack());
+			population.add(new BackPack(elements));
 		}
 	}
 
@@ -38,7 +38,7 @@ public abstract class HeuristicAlgorithm implements Algorithm {
 	public Individual getBestIndividual() {
 		double min = 100;
 		double tmp;
-		Individual resIndividual = new BackPack();
+		Individual resIndividual = null;
 		for(Individual i : population){
 			tmp = BackPack.MAX_WEIGHT - i.getWeight();
 			if(tmp >= 0 && tmp < min){

@@ -1,5 +1,5 @@
 package model.individual;
 
-public class Particle extends BackPack{
+public class Particle{
     private double[] vectorVelocity;
 }

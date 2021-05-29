@@ -4,10 +4,15 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import model.algorithm.Algorithm;
+import model.algorithm.GeneticAlgorithm;
+import model.individual.BackPack;
+import model.individual.Element;
+import model.individual.Individual;
+import model.individual.PoolElements;
 import view.*;
 
 public class Main extends Application {
-
     @Override
     public void start(Stage primaryStage) throws Exception{
         var scene = new Scene(new Pane());
@@ -20,8 +25,11 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-
     public static void main(String[] args) {
         launch(args);
+        Element[] poolElements = new PoolElements().getElements();
+        Algorithm a = new GeneticAlgorithm();
+        Individual bestSolution = a.solve(poolElements);
+        System.out.println(bestSolution);
     }
 }

@@ -22,9 +22,9 @@ public class PSOAlgorithm extends HeuristicAlgorithm {
 	}
 
 	public void initPopulation() {
-		for(int i = 0; i < NUM_INDIVIDUAL; i++) {
-			population.add(new Particle());
-		}
+		//for(int i = 0; i < NUM_INDIVIDUAL; i++) {
+		//	population.add(new Particle());
+		//}
 	}
 
 	public void operation0() {

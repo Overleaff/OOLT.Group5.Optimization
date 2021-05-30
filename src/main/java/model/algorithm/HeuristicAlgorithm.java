@@ -34,7 +34,7 @@ public abstract class HeuristicAlgorithm implements Algorithm {
 		return population;
 	}
 
-	public Individual getBestIndividual() {
+	public Individual getBestIndividual(){
 		double max = 0;
 		Individual resIndividual = null;
 		for(Individual i : population){
@@ -44,7 +44,7 @@ public abstract class HeuristicAlgorithm implements Algorithm {
 			}
 		}
 		return resIndividual;
-	}
+	};
 
 	public boolean isSatisfy(Individual individual) {
 		// kiểm tra xem (maxWeight - weight của bestIndividual) đã nhỏ hơn SATISFY_WEIGHT_LESS chưa,

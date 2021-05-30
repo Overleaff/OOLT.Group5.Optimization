@@ -25,6 +25,14 @@ public class PoolElements {
         return elements;
     }
 
+    public Double[] extractWeightArray(){
+        Double[] res = new Double[elements.length];
+        for(int i = 0; i < elements.length; i++){
+            res[i] = elements[i].getWeight();
+        }
+        return res;
+    }
+
     public static void main(String[] args){
         Element[] elements = new PoolElements().getElements();
         for(int i = 0 ; i < Element.MAX_ELEMENTS; i++){

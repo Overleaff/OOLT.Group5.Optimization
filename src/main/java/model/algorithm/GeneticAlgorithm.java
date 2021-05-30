@@ -27,7 +27,6 @@ public class GeneticAlgorithm extends HeuristicAlgorithm {
 			crossover((BackPack) population.get(i), (BackPack) population.get(NUM_INDIVIDUAL-i-1));
 		for(int i = 0; i< NUM_INDIVIDUAL/2; i++)
 			mutate(population.get(i));
-		System.out.println(getBestIndividual() + " "+getBestIndividual().getWeight());
 		return getBestIndividual();
 	}
 
@@ -48,7 +47,6 @@ public class GeneticAlgorithm extends HeuristicAlgorithm {
 		}
 	}
 
-
 	public void mutate(Individual bp) {
 		// update randomly 1/10 elements in the backpack with the new element not in backpack before
 		int ran = (int)(Math.random() * 10);
@@ -60,6 +58,7 @@ public class GeneticAlgorithm extends HeuristicAlgorithm {
 	public static void main(String[] args){
 		GeneticAlgorithm gA = new GeneticAlgorithm();
 		Element[] elements = new PoolElements().getElements();
-		gA.solve(elements);
+		Individual bestInd = gA.solve(elements);
+		System.out.println(bestInd + ", " + bestInd.getWeight());
 	}
 }

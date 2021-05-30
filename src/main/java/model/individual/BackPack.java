@@ -36,14 +36,6 @@ public class BackPack implements Individual {
 		return elementsList;
 	}
 
-/*	public int search(Element e){
-		for(int i = 0; i < Element.MAX_ELEMENTS; i++){
-			if(elementsList[i].getImageFile().equals(e.getImageFile()))
-				return i;
-		}
-		return -1;
-	}*/
-
 	public synchronized void updateElement(int i, double weight, String imgFile)
 	{
 		if(i >= 0 && i < Element.MAX_ELEMENTS){
@@ -78,6 +70,14 @@ public class BackPack implements Individual {
 			sB.append(", ");
 		}
 		return sB.toString();
+	}
+
+	public Double[] extractWeightArray(){
+		Double[] res = new Double[elementsList.length];
+		for(int i = 0; i < elementsList.length; i++){
+			res[i] = elementsList[i].getWeight();
+		}
+		return res;
 	}
 
 	public static void main(String[] args){

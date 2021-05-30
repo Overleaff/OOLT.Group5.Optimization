@@ -31,4 +31,8 @@ public class Element {
 		this.ImageFile = imgFile;
 	}
 
+	public boolean equals(Element e){
+		return this.ImageFile.equals(e.ImageFile);
+	}
+
 }

@@ -12,7 +12,6 @@ public class PoolElements {
         // khoi tao 20 items theo y mink
         // set imgFIle and random weight to each element
         File[] listOfFiles = new File(imgFolder).listFiles();
-        System.out.println(imgFolder);
         for (int i = 0; i < Element.MAX_ELEMENTS; i++) {
             double ranWeight = Math.random() * 3 + 1;
             ranWeight = (double)Math.round(ranWeight * 100) / 100;

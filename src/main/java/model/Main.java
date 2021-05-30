@@ -28,8 +28,8 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
         Element[] poolElements = new PoolElements().getElements();
-        Algorithm a = new GeneticAlgorithm();
-        Individual bestSolution = a.solve(poolElements);
+        Algorithm a = new GeneticAlgorithm(poolElements);
+        Individual bestSolution = a.solve();
         System.out.println(bestSolution);
     }
 }

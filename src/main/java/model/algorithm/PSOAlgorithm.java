@@ -1,5 +1,7 @@
 package model.algorithm;
 
+import model.individual.Element;
+import model.individual.State;
 import view.View;
 import model.individual.Individual;
 import model.individual.Particle;
@@ -7,10 +9,17 @@ import model.individual.Particle;
 import java.util.ArrayList;
 
 public class PSOAlgorithm extends HeuristicAlgorithm {
-
-	private ArrayList<Individual> population;
+	private ArrayList<Particle> population;
 
 	private Individual bestIndividual;
+
+	public PSOAlgorithm(Element[] elements){
+		super(elements);
+		for(Individual i : getPopulation()){
+			population.add((Particle) i);
+		}
+	}
+
 
 	public Individual doOtherSteps() {
 		// add code here

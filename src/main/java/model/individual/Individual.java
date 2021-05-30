@@ -1,6 +1,8 @@
 package model.individual;
 
 public interface Individual {
+    public static final int MAX_WEIGHT = 27; // 26kg
+
     public abstract double getWeight();
     public abstract Element[] getElements();
     public abstract void updateElement(Element e, double weight, String imgFile);

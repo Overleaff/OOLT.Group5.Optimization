@@ -1,8 +1,6 @@
 package model.individual;
 
 public class BackPack implements Individual {
-	public static final int MAX_WEIGHT = 27; // 26kg
-
 	private int numOfElement;
 	private double weight;
 	private Element[] elementsList = new Element[Element.MAX_ELEMENTS];
@@ -40,8 +38,10 @@ public class BackPack implements Individual {
 
 	public void updateElement(Element e, double weight, String imgFile)
 	{
+		double oldWei = e.getWeight();
 		e.setWeight(weight);
 		e.setImageFile(imgFile);
+		this.weight += weight - oldWei;
 	}
 
 	public boolean isContain(Element e){
@@ -55,7 +55,8 @@ public class BackPack implements Individual {
 	}
 	public Element getNewRandomElement(){
 		int ran = (int)(Math.random()*Element.MAX_ELEMENTS);
-		while(isContain(elements[ran])) {
+		int maxLoop = 0;
+		while(isContain(elements[ran]) && ++maxLoop < 10) {
 			ran = (int) (Math.random() * Element.MAX_ELEMENTS);
 		}
 		return elements[ran];

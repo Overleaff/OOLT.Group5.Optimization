@@ -17,6 +17,8 @@ public class BackPack implements Individual {
 			this.weight += elementsList[i].getWeight();
 			numOfElement++;
 		}
+		for(int i = Element.MAX_ELEMENTS/2; i < Element.MAX_ELEMENTS; i++)
+			elementsList[i] = new Element(0,"");
 	}
 
 	public Element getNewRandomElement(){
@@ -53,7 +55,7 @@ public class BackPack implements Individual {
 		if(numOfElement == 0)
 			return false;
 		for(int i = 0; i< numOfElement; i++){
-			if(elementsList[i].getImageFile().equals(e.getImageFile()))
+			if(elementsList[i].equals(e))
 				return true;
 		}
 		return false;
@@ -66,6 +68,24 @@ public class BackPack implements Individual {
 			sB.append(", ");
 		}
 		return sB.toString();
+	}
+
+	public double fitness(){
+		if(this.getWeight() > MAX_WEIGHT)
+			return 0.0;
+		return (double)Math.round(this.getWeight() * 100) / 100;
+	}
+
+	public Element[] getPoolElements(){
+		return this.elements;
+	}
+
+	public Double[] extractWeightArray(){
+		Double[] res = new Double[elements.length];
+		for(int i = 0; i < elements.length; i++){
+			res[i] = elements[i].getWeight();
+		}
+		return res;
 	}
 
 	public static void main(String[] args){

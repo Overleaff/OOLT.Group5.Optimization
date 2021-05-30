@@ -14,5 +14,7 @@ public interface Individual {
     // for sap xep cac individual
     public abstract String toString();
 
-    public Element getNewRandomElement();
+    public abstract Element getNewRandomElement();
+
+    public abstract double fitness();
 }

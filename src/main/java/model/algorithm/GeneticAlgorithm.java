@@ -9,27 +9,28 @@ import java.util.List;
 
 public class GeneticAlgorithm extends HeuristicAlgorithm {
 
-	private ArrayList<Genetic> population;
-
-	public GeneticAlgorithm(){
+	private ArrayList<BackPack> population = new ArrayList<>();
+	public GeneticAlgorithm(Element[] elements){
+		super(elements);
 		for(Individual i : getPopulation()){
-			population.add((Genetic) i);
+			population.add((BackPack) i);
 		}
-	};
-
-	public Genetic doOtherSteps() {
-		// sort individual theo fitness
-		Collections.sort(
-				population, Comparator.comparingDouble(Genetic::fitness)
-		);
-		for(int i = 0; i < NUM_INDIVIDUAL/2; i++)
-			crossover((Genetic) population.get(i), (Genetic) population.get(NUM_INDIVIDUAL-i-1));
-		for(int i = 0; i< NUM_INDIVIDUAL/2; i++)
-			mutate(population.get(i));
-		return (Genetic)getBestIndividual();
 	}
 
-	public void crossover(Genetic g1, Genetic g2) {
+	public BackPack doOtherSteps() {
+		// sort individual theo fitness
+		Collections.sort(
+				population, Comparator.comparingDouble(BackPack::fitness)
+		);
+		for(int i = 0; i < NUM_INDIVIDUAL/2; i++)
+			crossover(population.get(i), population.get(NUM_INDIVIDUAL-i-1));
+		for(int i = 0; i< NUM_INDIVIDUAL/2; i++)
+			mutate(population.get(i));
+		System.out.println(getBestIndividual());
+		return (BackPack) getBestIndividual();
+	}
+
+	public void crossover(BackPack g1, BackPack g2) {
 		// swap half of elements in in1 with half of elements in in2, number of elements in in1 equals to in2
 		Element[] items1 = g1.getElements();
 		Element[] items2 = g2.getElements();
@@ -46,7 +47,7 @@ public class GeneticAlgorithm extends HeuristicAlgorithm {
 		}
 	}
 
-	public void mutate(Genetic bp) {
+	public void mutate(BackPack bp) {
 		// update randomly 1/10 elements in the backpack with the new element not in backpack before
 		int ran = (int)(Math.random() * 10);
 		Element[] elements = bp.getElements();
@@ -54,22 +55,10 @@ public class GeneticAlgorithm extends HeuristicAlgorithm {
 		bp.updateElement(ran, e.getWeight(), e.getImageFile());
 	}
 
-	public Genetic getBestIndividual(){
-		double max = 0;
-		Genetic resIndividual = null;
-		for(Genetic i : population){
-			if(i.fitness() > max){
-				max = i.fitness();
-				resIndividual = i;
-			}
-		}
-		return resIndividual;
-	}
-
 	public static void main(String[] args){
-		GeneticAlgorithm gA = new GeneticAlgorithm();
 		Element[] elements = new PoolElements().getElements();
-		Individual bestInd = gA.solve(elements);
+		GeneticAlgorithm gA = new GeneticAlgorithm(elements);
+		Individual bestInd = gA.solve();
 		System.out.println(bestInd + ", " + bestInd.getWeight());
 	}
 }

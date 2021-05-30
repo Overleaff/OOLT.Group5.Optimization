@@ -7,7 +7,7 @@ import java.util.*;
 public abstract class HeuristicAlgorithm implements Algorithm {
 	public static final double SATISFY_WEIGHT_LESS = 0.2;
 	public static final int NUM_INDIVIDUAL = 10;
-	public static final int MAX_GENERATION = 10;
+	public static final int MAX_GENERATION = 20;
 
 	public int generation_level = 0;
 	private List<Individual> population = new ArrayList<Individual>();
@@ -18,7 +18,7 @@ public abstract class HeuristicAlgorithm implements Algorithm {
 		initPopulation(elements);
 		Individual bestInd = getBestIndividual();
 		// continue loop when we not find any satisfy Individual and generationLevel is not enough
-		while(!isSatisfy(bestInd) && ++generation_level < MAX_GENERATION){
+		while(!isSatisfy(bestInd) && generation_level++ < MAX_GENERATION){
 			bestInd = doOtherSteps();
 		}
 		return bestInd;

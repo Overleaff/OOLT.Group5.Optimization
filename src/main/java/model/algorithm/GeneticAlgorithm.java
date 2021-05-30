@@ -12,7 +12,7 @@ import java.util.List;
 
 public class GeneticAlgorithm extends HeuristicAlgorithm {
 
-	private ArrayList<Individual> population;
+	private ArrayList<Individual>  population;
 
 	public GeneticAlgorithm(){
 		this.population = (ArrayList<Individual>) getPopulation();
@@ -42,8 +42,8 @@ public class GeneticAlgorithm extends HeuristicAlgorithm {
 			if (!bp1.isContain(items2[i]) && !bp2.isContain(items1[i])) {
 				tmpWei = items1[i].getWeight();
 				tmpString = items1[i].getImageFile();
-				bp1.updateElement(items1[i], items2[i].getWeight(), items2[i].getImageFile());
-				bp2.updateElement(items2[i], tmpWei, tmpString);
+				bp1.updateElement(i, items2[i].getWeight(), items2[i].getImageFile());
+				bp2.updateElement(i, tmpWei, tmpString);
 			}
 		}
 	}
@@ -54,8 +54,7 @@ public class GeneticAlgorithm extends HeuristicAlgorithm {
 		int ran = (int)(Math.random() * 10);
 		Element[] elements = bp.getElements();
 		Element e = bp.getNewRandomElement();
-		bp.updateElement(elements[ran], e.getWeight(), e.getImageFile());
-
+		bp.updateElement(ran, e.getWeight(), e.getImageFile());
 	}
 
 	public static void main(String[] args){

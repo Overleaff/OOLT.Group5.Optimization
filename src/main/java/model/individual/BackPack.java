@@ -36,19 +36,28 @@ public class BackPack implements Individual {
 		return elementsList;
 	}
 
-	public void updateElement(Element e, double weight, String imgFile)
+/*	public int search(Element e){
+		for(int i = 0; i < Element.MAX_ELEMENTS; i++){
+			if(elementsList[i].getImageFile().equals(e.getImageFile()))
+				return i;
+		}
+		return -1;
+	}*/
+
+	public synchronized void updateElement(int i, double weight, String imgFile)
 	{
-		double oldWei = e.getWeight();
-		e.setWeight(weight);
-		e.setImageFile(imgFile);
-		this.weight += weight - oldWei;
+		if(i >= 0 && i < Element.MAX_ELEMENTS){
+			double oldWei = elementsList[i].getWeight();
+			elementsList[i] = new Item(weight, imgFile);
+			this.weight += weight - oldWei;
+		}
 	}
 
 	public boolean isContain(Element e){
 		if(numOfElement == 0)
 			return false;
 		for(int i = 0; i< numOfElement; i++){
-			if(elementsList[i].getImageFile().equalsIgnoreCase(e.getImageFile()))
+			if(elementsList[i].getImageFile().equals(e.getImageFile()))
 				return true;
 		}
 		return false;

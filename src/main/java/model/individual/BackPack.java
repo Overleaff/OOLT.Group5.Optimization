@@ -5,6 +5,7 @@ public class BackPack implements Individual {
 	private double weight;
 	private Element[] elementsList = new Element[Element.MAX_ELEMENTS];
 	private Element[] elements;
+
 	public BackPack(Element[] elements){
 		// mỗi khi tạo 1 backpack mới, thì elements trong cái backpack này được chọn ngẫu nhiên
 		// lưu lại 10 items này vào 10 phần tử đầu của itemList for simple
@@ -18,10 +19,13 @@ public class BackPack implements Individual {
 		}
 	}
 
-	public double fitness(){
-		if(this.getWeight() > MAX_WEIGHT)
-			return 0.0;
-		return (double)Math.round(this.getWeight() * 100) / 100;
+	public Element getNewRandomElement(){
+		int ran = (int)(Math.random()*Element.MAX_ELEMENTS);
+		int maxLoop = 0;
+		while(isContain(elements[ran]) && ++maxLoop < 10) {
+			ran = (int) (Math.random() * Element.MAX_ELEMENTS);
+		}
+		return elements[ran];
 	}
 
 	public double getWeight() {
@@ -40,7 +44,7 @@ public class BackPack implements Individual {
 	{
 		if(i >= 0 && i < Element.MAX_ELEMENTS){
 			double oldWei = elementsList[i].getWeight();
-			elementsList[i] = new Item(weight, imgFile);
+			elementsList[i] = new Element(weight, imgFile);
 			this.weight += weight - oldWei;
 		}
 	}
@@ -54,14 +58,6 @@ public class BackPack implements Individual {
 		}
 		return false;
 	}
-	public Element getNewRandomElement(){
-		int ran = (int)(Math.random()*Element.MAX_ELEMENTS);
-		int maxLoop = 0;
-		while(isContain(elements[ran]) && ++maxLoop < 10) {
-			ran = (int) (Math.random() * Element.MAX_ELEMENTS);
-		}
-		return elements[ran];
-	}
 
 	public String toString(){
 		StringBuilder sB = new StringBuilder();
@@ -72,14 +68,6 @@ public class BackPack implements Individual {
 		return sB.toString();
 	}
 
-	public Double[] extractWeightArray(){
-		Double[] res = new Double[elementsList.length];
-		for(int i = 0; i < elementsList.length; i++){
-			res[i] = elementsList[i].getWeight();
-		}
-		return res;
-	}
-
 	public static void main(String[] args){
 		Element[] PoolElements = new PoolElements().getElements();
 		BackPack bp = new BackPack(PoolElements);
@@ -87,8 +75,5 @@ public class BackPack implements Individual {
 		for(int i = 0; i < bp.numOfElement; i++){
 			System.out.println(elements[i].getWeight() + " " + elements[i].getImageFile());
 		}
-		System.out.println(bp.getNewRandomElement().getImageFile());
-		System.out.println(bp.getWeight());
-		System.out.println(bp.fitness());
 	}
 }

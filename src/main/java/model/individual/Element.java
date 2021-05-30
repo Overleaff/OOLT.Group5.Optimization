@@ -1,11 +1,34 @@
 package model.individual;
 
-public interface Element {
+public class Element {
 	public static final int MAX_ELEMENTS = 20;
 
-	public abstract double getWeight();
-	public abstract String getImageFile();
-	public abstract void setWeight(double weight);
-	public abstract void setImageFile(String imgFile);
+	private double weight;
+	private String ImageFile;
+
+	public Element(double weight){
+		this.weight = weight;
+	}
+
+	public Element(double weight, String ImageFile){
+		this.weight = weight;
+		this.ImageFile = ImageFile;
+	}
+
+	public double getWeight() {
+		return this.weight;
+	}
+
+	public String getImageFile() {
+		return ImageFile;
+	}
+
+	public void setWeight(double weight){
+		this.weight = weight;
+	}
+
+	public void setImageFile(String imgFile){
+		this.ImageFile = imgFile;
+	}
 
 }

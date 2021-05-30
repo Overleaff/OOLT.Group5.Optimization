@@ -17,6 +17,11 @@ public class PSOAlgorithm extends HeuristicAlgorithm {
 		return null;
 	}
 
+	@Override
+	public Individual getBestIndividual() {
+		return null;
+	}
+
 	public ArrayList<Individual> evolve() {
 		return null;
 	}

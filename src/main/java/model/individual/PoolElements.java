@@ -17,7 +17,7 @@ public class PoolElements {
             double ranWeight = Math.random() * 3 + 1;
             ranWeight = (double)Math.round(ranWeight * 100) / 100;
             if (listOfFiles[i].isFile())
-                elements[i] = new Item(ranWeight, listOfFiles[i].getName());
+                elements[i] = new Element(ranWeight, listOfFiles[i].getName());
         }
     }
 

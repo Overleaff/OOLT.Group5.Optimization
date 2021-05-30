@@ -3,6 +3,7 @@ package model.algorithm;
 import model.individual.BackPack;
 import model.individual.Element;
 import model.individual.Individual;
+import model.individual.State;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,19 +16,23 @@ public class HillClimbingAlgorithm extends HeuristicAlgorithm {
 	// 1. consider adding one of all items that not in backpack yet, store back the best node that closest to goal
 	// 2. sort all items that not in backpack, then loop through all items inside backpack, for each loop we use binary
 	// search to find the replaced item that let this new state closest to the goal.
-
-	private Individual stateIndividual;
-
-	private Element binarySearch(double target, Element[] a){
-		double[] weightArray =
-	}
+	private State state;
 
 	public HillClimbingAlgorithm(){
-		this.stateIndividual = getBestIndividual();
+		state = (State) getBestIndividual();
+	}
+
+	private Element binarySearch(double target, Element[] a){
+		return ;
 	}
 
 	public Individual doOtherSteps() {
 		// add code here
+		return null;
+	}
+
+	@Override
+	public Individual getBestIndividual() {
 		return null;
 	}
 

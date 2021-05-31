@@ -20,7 +20,8 @@ public class BackPack implements Individual {
 		for(int i = Element.MAX_ELEMENTS/2; i < Element.MAX_ELEMENTS; i++)
 			elements[i] = new Element(0,"");
 	}
-
+	
+	//get new random element that not in Backpack yet
 	public Element getNewRandomElement(){
 		int ran = (int)(Math.random()*Element.MAX_ELEMENTS);
 		int maxLoop = 0;
@@ -31,6 +32,7 @@ public class BackPack implements Individual {
 	}
 
 	public double getWeight() {
+		// round to 2 digit decimal
 		return (double)Math.round(weight * 100) / 100;
 	}
 

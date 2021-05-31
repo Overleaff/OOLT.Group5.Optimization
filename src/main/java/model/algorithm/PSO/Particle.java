@@ -1,41 +1,54 @@
-package model.algorithm.PSO;
+package model.algorithm.PSO.PSO_;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
  * Represents a particle from the Particle Swarm Optimization algorithm.
  */
-class Particle {
+public class Particle {
 
     private Vector position;        // Current position.
     private Vector velocity;
     private Vector bestPosition;    // Personal best solution.
     private double bestEval;        // Personal best value.
-    private FunctionType function;  // The evaluation function to use.
+
 
     /**
      * Construct a Particle with a random starting position.
      * @param beginRange    the minimum xyz values of the position (inclusive)
      * @param endRange      the maximum xyz values of the position (exclusive)
      */
-    Particle (FunctionType function, int beginRange, int endRange) {
+    Particle ( int beginRange, int endRange,float maxWeight, ArrayList<Float> weight) {
         if (beginRange >= endRange) {
             throw new IllegalArgumentException("Begin range must be less than end range.");
         }
-        this.function = function;
         position = new Vector();
         velocity = new Vector();
         setRandomPosition(beginRange, endRange);
         bestPosition = velocity.clone();
-        bestEval = eval();
+        bestEval = eval(maxWeight, weight);
     }
 
     /**
      * The evaluation of the current position.
      * @return      the evaluation
      */
-    private double eval () {
-            return Function.functionA(position.getX());
+    private double eval (float maxWeight, ArrayList<Float> weight) {
+    
+            String arr = new String( Integer.toBinaryString( (int)Math.abs(position.getX()) )  );
+            float totalweight = 0;
+    
+            if (arr.length() > weight.size()) return 100;
+            int lengthDif = weight.size() - arr.length();
+            
+            for (int i = arr.length()-1; i >= 0; i--){
+                if (arr.charAt(i) == '1')  {
+                    totalweight += weight.get(i+lengthDif); 
+                }
+            }
+            if (totalweight > maxWeight) return 100;
+            return maxWeight - totalweight;
     }
 
     private void setRandomPosition (int beginRange, int endRange) {
@@ -59,8 +72,8 @@ class Particle {
     /**
      * Update the personal best if the current evaluation is better.
      */
-    void updatePersonalBest () {
-        double eval = eval();
+    void updatePersonalBest (float maxWeight, ArrayList<Float> weight) {
+        double eval = eval(maxWeight, weight);
         if (eval < bestEval) {
             bestPosition = position.clone();
             bestEval = eval;
@@ -112,10 +125,6 @@ class Particle {
      */
     void setVelocity (Vector velocity) {
         this.velocity = velocity.clone();
-    }
-
-    public enum FunctionType {
-        FunctionA,
     }
 
 }

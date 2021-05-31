@@ -1,9 +1,9 @@
-package model.algorithm.PSO;
+package model.algorithm.PSO.PSO_;
 
 /**
  * Can represent a position as well as a velocity.
  */
-class Vector {
+public class Vector {
 
     private double x, y, z;
     private double limit = Double.MAX_VALUE;

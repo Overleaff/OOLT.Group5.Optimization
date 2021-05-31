@@ -1,4 +1,4 @@
-module Optimization1 {
+module Optimization {
     requires javafx.controls;
     requires javafx.fxml;
 

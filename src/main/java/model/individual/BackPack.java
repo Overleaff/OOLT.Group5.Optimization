@@ -69,6 +69,7 @@ public class BackPack implements Individual {
 			sB.append(elements[i].getImageFile());
 			sB.append(", ");
 		}
+		sB.append(this.getWeight());
 		return sB.toString();
 	}
 
@@ -83,8 +84,8 @@ public class BackPack implements Individual {
 	}
 
 	public static void main(String[] args){
-		Element[] PoolElements = new PoolElements().getElements();
-		BackPack bp = new BackPack(PoolElements);
+		Element[] poolElements = PoolElements.getElements();
+		BackPack bp = new BackPack(poolElements);
 		Element[] elements = bp.getElements();
 		for(int i = 0; i < bp.numOfElement; i++){
 			System.out.println(elements[i].getWeight() + " " + elements[i].getImageFile());

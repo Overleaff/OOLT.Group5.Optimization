@@ -75,7 +75,7 @@ public class HillClimbingAlgorithm extends HeuristicAlgorithm {
 	}
 
 	public static void main(String[] args){
-		Element[] elements = new PoolElements().getElements();
+		Element[] elements = PoolElements.getElements();
 		HillClimbingAlgorithm hc = new HillClimbingAlgorithm(elements);
 		Individual bestInd = hc.solve();
 		System.out.println(bestInd + ", " + bestInd.getWeight());

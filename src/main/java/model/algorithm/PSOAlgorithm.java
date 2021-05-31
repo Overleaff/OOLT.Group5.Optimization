@@ -1,7 +1,6 @@
 package model.algorithm;
 
 import model.individual.Element;
-import model.individual.State;
 import view.View;
 import model.individual.Individual;
 import model.individual.Particle;

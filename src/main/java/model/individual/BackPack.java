@@ -3,34 +3,36 @@ package model.individual;
 public class BackPack implements Individual {
 	private int numOfElement;
 	private double weight;
-	private Element[] elementsList = new Element[Element.MAX_ELEMENTS];
-	private Element[] elements;
+	private Element[] elements = new Element[Element.MAX_ELEMENTS];
+	private Element[] poolElements;
 
-	public BackPack(Element[] elements){
+	public BackPack(Element[] poolElements){
 		// mỗi khi tạo 1 backpack mới, thì elements trong cái backpack này được chọn ngẫu nhiên
 		// lưu lại 10 items này vào 10 phần tử đầu của itemList for simple
 		// element nào k có trong backpack thì để weight = 0, số lượng elements có weight != 0 nên là 10
 		// nhớ tính toán weight của backpack và lưu lại
-		this.elements = elements;
+		this.poolElements = poolElements;
 		for(int i = 0; i < Element.MAX_ELEMENTS/2; i++){
-			elementsList[i] = getNewRandomElement();
-			this.weight += elementsList[i].getWeight();
+			elements[i] = getNewRandomElement();
+			this.weight += elements[i].getWeight();
 			numOfElement++;
 		}
 		for(int i = Element.MAX_ELEMENTS/2; i < Element.MAX_ELEMENTS; i++)
-			elementsList[i] = new Element(0,"");
+			elements[i] = new Element(0,"");
 	}
-
+	
+	//get new random element that not in Backpack yet
 	public Element getNewRandomElement(){
 		int ran = (int)(Math.random()*Element.MAX_ELEMENTS);
 		int maxLoop = 0;
-		while(isContain(elements[ran]) && ++maxLoop < 10) {
+		while(isContain(poolElements[ran]) && ++maxLoop < 10) {
 			ran = (int) (Math.random() * Element.MAX_ELEMENTS);
 		}
-		return elements[ran];
+		return poolElements[ran];
 	}
 
 	public double getWeight() {
+		// round to 2 digit decimal
 		return (double)Math.round(weight * 100) / 100;
 	}
 
@@ -39,14 +41,14 @@ public class BackPack implements Individual {
 	}
 
 	public Element[] getElements() {
-		return elementsList;
+		return elements;
 	}
 
 	public synchronized void updateElement(int i, double weight, String imgFile)
 	{
 		if(i >= 0 && i < Element.MAX_ELEMENTS){
-			double oldWei = elementsList[i].getWeight();
-			elementsList[i] = new Element(weight, imgFile);
+			double oldWei = elements[i].getWeight();
+			elements[i] = new Element(weight, imgFile);
 			this.weight += weight - oldWei;
 		}
 	}
@@ -55,7 +57,7 @@ public class BackPack implements Individual {
 		if(numOfElement == 0)
 			return false;
 		for(int i = 0; i< numOfElement; i++){
-			if(elementsList[i].equals(e))
+			if(elements[i].equals(e))
 				return true;
 		}
 		return false;
@@ -64,7 +66,7 @@ public class BackPack implements Individual {
 	public String toString(){
 		StringBuilder sB = new StringBuilder();
 		for(int i = 0; i < numOfElement; i++){
-			sB.append(elementsList[i].getImageFile());
+			sB.append(elements[i].getImageFile());
 			sB.append(", ");
 		}
 		return sB.toString();
@@ -77,15 +79,7 @@ public class BackPack implements Individual {
 	}
 
 	public Element[] getPoolElements(){
-		return this.elements;
-	}
-
-	public Double[] extractWeightArray(){
-		Double[] res = new Double[elements.length];
-		for(int i = 0; i < elements.length; i++){
-			res[i] = elements[i].getWeight();
-		}
-		return res;
+		return this.poolElements;
 	}
 
 	public static void main(String[] args){

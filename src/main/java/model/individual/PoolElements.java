@@ -7,10 +7,11 @@ public class PoolElements {
     public static final String projectDirectory = System.getProperty("user.dir");
     //sua lai directory image file later
     public static final String imgFolder = "/home/sherlock/IdeaProjects/OOLT.Group5.Optimization/src/main/resources/img";
-    private Element[] elements = new Element[Element.MAX_ELEMENTS];
-    public PoolElements(){
+    private static Element[] elements;
+    private PoolElements(){
         // khoi tao 20 items theo y mink
         // set imgFIle and random weight to each element
+        elements = new Element[Element.MAX_ELEMENTS];
         File[] listOfFiles = new File(imgFolder).listFiles();
         for (int i = 0; i < Element.MAX_ELEMENTS; i++) {
             double ranWeight = Math.random() * 3 + 1;
@@ -20,16 +21,8 @@ public class PoolElements {
         }
     }
 
-    public Element[] getElements(){
+    public static Element[] getElements(){
         return elements;
-    }
-
-    public Double[] extractWeightArray(){
-        Double[] res = new Double[elements.length];
-        for(int i = 0; i < elements.length; i++){
-            res[i] = elements[i].getWeight();
-        }
-        return res;
     }
 
     public static void main(String[] args){

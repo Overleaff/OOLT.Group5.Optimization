@@ -1,7 +1,7 @@
 package model.individual;
 
 public interface Individual {
-    public static final int MAX_WEIGHT = 27; // 26kg
+    public static final int MAX_WEIGHT = 27; // 27kg
 
     public abstract double getWeight();
 

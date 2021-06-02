@@ -14,12 +14,8 @@ public class HillClimbingAlgorithm extends HeuristicAlgorithm {
 	// 2. sort all items that not in backpack, then loop through all items inside backpack, for each loop we use binary
 	// search to find the replaced item that let this new state closest to the goal.
 	private BackPack bp;
-	private ArrayList<BackPack> population = new ArrayList<>();
 
 	public HillClimbingAlgorithm(){
-		for(Individual i : getPopulation()){
-			population.add((BackPack) i);
-		}
 		this.bp = (BackPack) getBestIndividual();
 	}
 	// return the Element with weight that closest to target and still < target

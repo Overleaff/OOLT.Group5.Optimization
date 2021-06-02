@@ -1,4 +1,4 @@
-package model.algorithm.PSO;
+package algorithm.PSO;
 
 /**
  * Can represent a position as well as a velocity.

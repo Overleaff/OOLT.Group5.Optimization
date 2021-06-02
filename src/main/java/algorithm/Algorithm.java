@@ -1,6 +1,6 @@
-package model.algorithm;
+package algorithm;
 
-import model.individual.Individual;
+import model.Individual;
 
 public interface Algorithm {
 	public abstract Individual solve();

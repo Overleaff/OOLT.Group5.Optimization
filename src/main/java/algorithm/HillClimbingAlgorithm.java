@@ -1,8 +1,10 @@
-package model.algorithm;
+package algorithm;
 
-import model.individual.*;
+import model.BackPack;
+import model.Element;
+import model.Individual;
+import model.PoolElements;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 

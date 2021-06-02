@@ -1,4 +1,4 @@
-package model.individual;
+package model;
 
 public interface Individual {
     public static final int MAX_WEIGHT = 27; // 27kg

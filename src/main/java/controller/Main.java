@@ -1,15 +1,13 @@
-package model;
+package controller;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import model.algorithm.*;
 
-import model.individual.*;
+import algorithm.*;
+import model.BackPack;
 import view.*;
-
-import java.util.ArrayList;
 
 public class Main extends Application {
     @Override

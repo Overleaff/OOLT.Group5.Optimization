@@ -1,6 +1,7 @@
-package model.algorithm;
+package algorithm;
 
-import model.individual.*;
+import model.BackPack;
+import model.Individual;
 
 import java.util.*;
 
@@ -10,7 +11,6 @@ public abstract class HeuristicAlgorithm implements Algorithm {
 	public static final int MAX_GENERATION = 20;
 
 	private int generationLevel = 0;
-
 	private List<Individual> population = new ArrayList<Individual>();
 
 	public HeuristicAlgorithm(){

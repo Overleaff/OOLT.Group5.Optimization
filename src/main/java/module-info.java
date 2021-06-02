@@ -4,8 +4,8 @@ module Optimization {
     requires javafx.graphics;
 
     opens controller to javafx.fxml;
-    exports model.individual;
-    exports model.algorithm;
     exports model;
+    exports algorithm;
     exports view;
+    exports controller;
 }

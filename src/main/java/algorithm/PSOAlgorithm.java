@@ -1,8 +1,11 @@
-package model.algorithm;
+package algorithm;
 
 //import view.View;
-import model.individual.*;
-import model.algorithm.PSO.Swarm;
+import model.BackPack;
+import model.Element;
+import model.Individual;
+import model.PoolElements;
+import algorithm.PSO.Swarm;
 
 import java.util.ArrayList;
 

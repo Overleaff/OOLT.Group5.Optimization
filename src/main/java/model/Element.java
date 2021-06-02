@@ -1,4 +1,4 @@
-package model.individual;
+package model;
 
 public class Element {
 	public static final int MAX_ELEMENTS = 20;

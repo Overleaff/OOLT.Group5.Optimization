@@ -1,4 +1,4 @@
-package model.individual;
+package model;
 
 public class BackPack implements Individual {
 	private int numOfElement;

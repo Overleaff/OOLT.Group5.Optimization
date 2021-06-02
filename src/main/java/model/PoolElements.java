@@ -1,4 +1,4 @@
-package model.individual;
+package model;
 
 import java.io.File;
 

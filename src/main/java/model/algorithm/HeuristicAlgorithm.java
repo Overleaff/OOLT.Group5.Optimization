@@ -9,7 +9,7 @@ public abstract class HeuristicAlgorithm implements Algorithm {
 	public static final int NUM_INDIVIDUAL = 10;
 	public static final int MAX_GENERATION = 20;
 
-	public int generation_level = 0;
+	private int generationLevel = 0;
 
 	private List<Individual> population = new ArrayList<Individual>();
 
@@ -22,7 +22,7 @@ public abstract class HeuristicAlgorithm implements Algorithm {
 	public final Individual solve() {
 		Individual bestInd = getBestIndividual();
 		// continue loop when we not find any satisfy Individual and generationLevel is not enough
-		while(!isSatisfy(bestInd) && generation_level++ < MAX_GENERATION){
+		while(!isSatisfy(bestInd) && generationLevel++ < MAX_GENERATION){
 			bestInd = doOtherSteps();
 		}
 		return bestInd;
@@ -32,6 +32,10 @@ public abstract class HeuristicAlgorithm implements Algorithm {
 		for(int i = 0; i < NUM_INDIVIDUAL; i++){
 			population.add(new BackPack());
 		}
+	}
+
+	public int getGenerationLevel(){
+		return this.generationLevel;
 	}
 
 	public List<Individual> getPopulation() {

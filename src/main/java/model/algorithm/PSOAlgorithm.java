@@ -19,7 +19,7 @@ public class PSOAlgorithm extends HeuristicAlgorithm {
 	}
 
 	public Individual doOtherSteps() {
-		int tmp = this.generation_level;
+		int tmp = getGenerationLevel();
 		if(tmp > abc.size()-1)
 			tmp = abc.size()-1;
 		BackPack bp2 = new BackPack();

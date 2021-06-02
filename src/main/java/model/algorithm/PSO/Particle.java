@@ -1,4 +1,4 @@
-package model.algorithm.PSO.PSO_;
+package model.algorithm.PSO;
 
 import java.util.ArrayList;
 import java.util.Random;

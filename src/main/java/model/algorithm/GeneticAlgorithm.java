@@ -5,13 +5,11 @@ import model.individual.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 
 public class GeneticAlgorithm extends HeuristicAlgorithm {
 
 	private ArrayList<BackPack> population = new ArrayList<>();
-	public GeneticAlgorithm(Element[] elements){
-		super(elements);
+	public GeneticAlgorithm(){
 		for(Individual i : getPopulation()){
 			population.add((BackPack) i);
 		}
@@ -49,14 +47,12 @@ public class GeneticAlgorithm extends HeuristicAlgorithm {
 	public void mutate(BackPack bp) {
 		// update randomly 1/10 elements in the backpack with the new element not in backpack before
 		int ran = (int)(Math.random() * 10);
-		Element[] elements = bp.getElements();
 		Element e = bp.getNewRandomElement();
 		bp.updateElement(ran, e.getWeight(), e.getImageFile());
 	}
 
 	public static void main(String[] args){
-		Element[] elements = PoolElements.getElements();
-		GeneticAlgorithm gA = new GeneticAlgorithm(elements);
+		GeneticAlgorithm gA = new GeneticAlgorithm();
 		Individual bestInd = gA.solve();
 		System.out.println(bestInd + ", " + bestInd.getWeight());
 	}

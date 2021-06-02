@@ -13,8 +13,8 @@ public abstract class HeuristicAlgorithm implements Algorithm {
 
 	private List<Individual> population = new ArrayList<Individual>();
 
-	public HeuristicAlgorithm(Element[] elements){
-		initPopulation(elements);
+	public HeuristicAlgorithm(){
+		initPopulation();
 	}
 
 	public abstract Individual doOtherSteps();
@@ -28,9 +28,9 @@ public abstract class HeuristicAlgorithm implements Algorithm {
 		return bestInd;
 	}
 
-	public void initPopulation(Element[] elements) {
+	public void initPopulation() {
 		for(int i = 0; i < NUM_INDIVIDUAL; i++){
-			population.add(new BackPack(elements));
+			population.add(new BackPack());
 		}
 	}
 
@@ -56,5 +56,4 @@ public abstract class HeuristicAlgorithm implements Algorithm {
 		double tmp = individual.MAX_WEIGHT - individual.getWeight();
 		return tmp <= SATISFY_WEIGHT_LESS && tmp >= 0;
 	}
-
 }

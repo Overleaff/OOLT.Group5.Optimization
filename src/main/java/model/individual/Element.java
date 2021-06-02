@@ -23,14 +23,6 @@ public class Element {
 		return ImageFile;
 	}
 
-	public void setWeight(double weight){
-		this.weight = weight;
-	}
-
-	public void setImageFile(String imgFile){
-		this.ImageFile = imgFile;
-	}
-
 	public boolean equals(Element e){
 		return this.ImageFile.equals(e.ImageFile);
 	}

@@ -5,16 +5,7 @@ public interface Individual {
 
     public abstract double getWeight();
 
-    public abstract Element[] getElements();
-
-    public abstract void updateElement(int i, double weight, String imgFile);
-
-    public abstract int getNumOfElement();
-
-    // for sap xep cac individual
-    public abstract String toString();
-
-    public abstract Element getNewRandomElement();
-
     public abstract double fitness();
+
+    public abstract String toString();
 }

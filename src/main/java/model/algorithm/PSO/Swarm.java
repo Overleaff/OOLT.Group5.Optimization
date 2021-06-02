@@ -1,4 +1,6 @@
-package model.algorithm.PSO.PSO_;
+package model.algorithm.PSO;
+
+import model.algorithm.PSO.Particle;
 
 import java.util.Random;
 import java.util.ArrayList;

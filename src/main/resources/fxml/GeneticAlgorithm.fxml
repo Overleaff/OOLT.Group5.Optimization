@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GeneticAlgorithmViewController">
+    <bottom>
+        <HBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="20.0" BorderPane.alignment="TOP_LEFT">
+            <children>
+                <Label fx:id="tipLabel">
+                    <font>
+                        <Font name="System Italic" size="14.0" />
+                    </font>
+                </Label>
+                <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButtonClicked" text="Back to Menu" />
+            </children>
+            <padding>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </padding>
+        </HBox>
+    </bottom>
+    <top>
+        <VBox BorderPane.alignment="CENTER">
+            <children>
+                <Label fx:id="titleLabel" text="Genetic Algorithms">
+                    <font>
+                        <Font name="System Bold" size="16.0" />
+                    </font>
+                </Label>
+            </children>
+            <padding>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </padding>
+        </VBox>
+    </top>
+    <center>
+        <ScrollPane fx:id="generationsScrollPane" pannable="true" BorderPane.alignment="CENTER">
+            <content>
+                <VBox fx:id="generationsVBox" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="20.0">
+                </VBox>
+            </content>
+            <padding>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            </padding>
+        </ScrollPane>
+    </center>
+</BorderPane>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #151515;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainMenuController">
+    <children>
+        <Label alignment="CENTER" prefWidth="600.0" text="Evolutionary Algorithms" textAlignment="CENTER" wrapText="true" VBox.vgrow="SOMETIMES">
+            <font>
+                <Font name="System Bold" size="90.0" />
+            </font>
+            <textFill>
+                <LinearGradient endX="1.0" endY="1.0">
+                    <stops>
+                        <Stop>
+                            <color>
+                                <Color red="0.30588236451148987" green="0.27450981736183167" blue="1.0" />
+                            </color>
+                        </Stop>
+                        <Stop offset="0.6979452054794522">
+                            <color>
+                                <Color red="0.6173999905586243" green="0.9800000190734863" blue="0.8047433495521545" />
+                            </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                            <color>
+                                <Color red="0.6117647290229797" green="0.9803921580314636" blue="0.8078431487083435" />
+                            </color>
+                        </Stop>
+                    </stops>
+                </LinearGradient>
+            </textFill>
+            <VBox.margin>
+                <Insets bottom="30.0" />
+            </VBox.margin>
+        </Label>
+        <Label text="Object-Oriented Programing course's mini-project" textAlignment="CENTER" textFill="#bdc3c7" VBox.vgrow="SOMETIMES">
+            <VBox.margin>
+                <Insets top="10.0" />
+            </VBox.margin>
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Label>
+        <Label text="Developed by: Do Quang Khai, Dinh The Kiet &amp; Bui Manh Tu" textAlignment="CENTER" textFill="#bdc3c7" VBox.vgrow="SOMETIMES">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Label>
+        <HBox alignment="CENTER" spacing="50.0">
+            <children>
+                <Button fx:id="geneticAlgorithmButton" mnemonicParsing="false" onAction="#geneticAlgorithmButtonClicked" text="Genetic Algorithm">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </padding>
+                </Button>
+                <Button fx:id="psoButton" mnemonicParsing="false" onAction="#psoButtonClicked" text="Partical Swarm Optimization">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </padding>
+                </Button>
+                <Button fx:id="hillClimbingButton" mnemonicParsing="false" onAction="#hillClimbingButtonClicked" text="Hill Climbing">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                    <HBox.margin>
+                        <Insets />
+                    </HBox.margin>
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </padding>
+                </Button>
+            </children>
+            <VBox.margin>
+                <Insets top="60.0" />
+            </VBox.margin>
+        </HBox>
+    </children>
+</VBox>

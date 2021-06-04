@@ -3,10 +3,11 @@ package controller;
 import algorithm.GeneticAlgorithm;
 import algorithm.HeuristicAlgorithm;
 import javafx.application.Platform;
-import javafx.collections.ListChangeListener;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -25,40 +26,82 @@ import view.MainMenuView;
 import view.ViewSwitcher;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.Objects;
+import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
-public class GeneticAlgorithmViewController {
-    public static final int TOTAL_COLUMNS_BP = 4;
-    public Element[] elements;
-    public ObservableList<BackPack> backPacks;
-    public GeneticAlgorithm geneticAlgorithm;
+public class GeneticAlgorithmController implements Initializable {
+    private static final int TOTAL_COLUMNS_BP = 4;
+    private static final int INITIAL_WAIT_DELAY = 100;
+    private Element[] elements;
+    private ObservableList<BackPack> backPacks;
+    private SimpleIntegerProperty shouldUpdateUI;
+    private GeneticAlgorithm geneticAlgorithm;
     @FXML
-    public static ScrollPane generationsScrollPane = new ScrollPane();
+    private VBox generationsVBox = new VBox();
     @FXML
-    public VBox generationsVBox = new VBox();
+    private static ScrollPane generationsScrollPane = new ScrollPane();
     @FXML
-    public Label titleLabel = new Label();
-    @FXML
-    public Label tipLabel = new Label();
+    private Button backButton = new Button();
 
-    public GeneticAlgorithmViewController() {
-        this.geneticAlgorithm = new GeneticAlgorithm();
+    private static Node getSelectedNode(int index) {
+        int row = index / (TOTAL_COLUMNS_BP + 1);
+        int column = index % (TOTAL_COLUMNS_BP + 1);
+        ObservableList<Node> children = ((GridPane) ((VBox) generationsScrollPane.getContent()).getChildren().get(1)).getChildren();
+        for (Node node : children) {
+            if (GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == column)
+                return node;
+        }
+        return null;
     }
 
-    @FXML
-    public void initialize() {
-        tipLabel.setText("Initializing population");
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        backButton.setCancelButton(true);
+        geneticAlgorithm = new GeneticAlgorithm();
+        shouldUpdateUI = HeuristicAlgorithm.shouldUpdateUI;
         backPacks = geneticAlgorithm.getPopulations();
+
+        shouldUpdateUI.addListener((observableValue, oldVal, newVal) -> updateUI(newVal));
         updateGenerations();
 
         generationsVBox.setAlignment(Pos.CENTER);
         generationsScrollPane.setContent(generationsVBox);
-        backPacks.addListener((ListChangeListener<BackPack>) change -> updateGenerations());
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(() -> {
+                    BackPack bestInd = (BackPack) geneticAlgorithm.solve();
+                    updateBestIndividual(bestInd);
+                });
+            }
+        }, INITIAL_WAIT_DELAY);
+    }
 
-        Platform.runLater(() -> {
-            BackPack bestInd = (BackPack) geneticAlgorithm.solve();
-            updateBestIndividual(bestInd);
-        });
+    private void updateUI(Number newVal) {
+        if(newVal.equals(1))
+            updateGenerations();
+        else if(newVal.equals(2))
+            updateCrossOver();
+        if(newVal.equals(3))
+            updateMutate();
+    }
+
+    private void updateMutate() {
+        System.out.println("test");
+    }
+
+    private void updateCrossOver() {
+        for (int i = 0; i < HeuristicAlgorithm.NUM_INDIVIDUAL / 2; i++) {
+            Node node = ((GridPane) ((VBox) generationsScrollPane.getContent()).getChildren().get(1)).getChildren().get(i);
+            Node node2 = ((GridPane) ((VBox) generationsScrollPane.getContent()).getChildren().get(1)).getChildren().get(HeuristicAlgorithm.NUM_INDIVIDUAL - i - 1);
+            node.setStyle("-fx-background-color: green");
+            node2.setStyle("-fx-background-color: green");
+        }
     }
 
     private void updateGenerations() {
@@ -97,11 +140,12 @@ public class GeneticAlgorithmViewController {
         generationsVBox.getChildren().add(0, resultLabel);
     }
 
-    public void backButtonClicked(ActionEvent actionEvent) throws IOException {
+    @FXML
+    private void backButtonClicked(ActionEvent actionEvent) throws IOException {
         ViewSwitcher.switchTo(new MainMenuView());
     }
 
-    public GridPane addElementsToGrid() {
+    private GridPane addElementsToGrid() {
         GridPane elementsGridPane = new GridPane();
         int row = 0, column = 0;
         for (Element element : elements) {
@@ -117,7 +161,7 @@ public class GeneticAlgorithmViewController {
         return elementsGridPane;
     }
 
-    public GridPane addBackpacksToGrid() {
+    private GridPane addBackpacksToGrid() {
         GridPane elementsGridPane = new GridPane();
         elementsGridPane.setHgap(20);
         elementsGridPane.setVgap(10);
@@ -148,26 +192,7 @@ public class GeneticAlgorithmViewController {
         return elementsGridPane;
     }
 
-    public BackPack getSelectedItem(int row, int column) {
+    private BackPack getSelectedItem(int row, int column) {
         return backPacks.get((TOTAL_COLUMNS_BP + 1) * row + column);
-    }
-
-    public static Node getSelectedNode(int index) {
-        int row = index / (TOTAL_COLUMNS_BP + 1);
-        int column = index % (TOTAL_COLUMNS_BP + 1);
-        ObservableList<Node> children = ((GridPane) ((VBox) generationsScrollPane.getContent()).getChildren().get(1)).getChildren();
-        for (Node node : children) {
-            if (GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == column)
-                return node;
-        }
-        return null;
-    }
-
-    public void setTitleLabel(Label titleLabel) {
-        this.titleLabel = titleLabel;
-    }
-
-    public void setTipLabel(Label tipLabel) {
-        this.tipLabel = tipLabel;
     }
 }

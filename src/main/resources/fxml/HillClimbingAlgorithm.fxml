@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GeneticAlgorithmController">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.HillClimbingAlgorithmController">
     <bottom>
         <HBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="20.0" BorderPane.alignment="TOP_LEFT">
             <children>
@@ -19,7 +19,7 @@
     <top>
         <VBox BorderPane.alignment="CENTER">
             <children>
-                <Label fx:id="titleLabel" text="Genetic Algorithms">
+                <Label fx:id="titleLabel" text="Hill Climbing Algorithm">
                     <font>
                         <Font name="System Bold" size="16.0" />
                     </font>

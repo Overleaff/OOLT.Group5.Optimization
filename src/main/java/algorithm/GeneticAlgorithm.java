@@ -1,16 +1,7 @@
 package algorithm;
 
-import controller.GeneticAlgorithmViewController;
-import javafx.animation.FadeTransition;
-import javafx.animation.FillTransition;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.util.Duration;
 import model.BackPack;
 import model.Element;
 import model.Individual;
@@ -36,31 +27,20 @@ public class GeneticAlgorithm extends HeuristicAlgorithm {
 
     public BackPack doOtherSteps() {
         // sort individual theo fitness
+        System.out.println(getGenerationLevel());
+        shouldUpdateUI.set(0);
         Collections.sort(
                 population, Comparator.comparingDouble(BackPack::fitness)
         );
+        shouldUpdateUI.set(1);
         for (int i = 0; i < NUM_INDIVIDUAL / 2; i++) {
-            int finalI = i;
-            Platform.runLater(() -> {
-                crossover(population.get(finalI), population.get(NUM_INDIVIDUAL - finalI - 1));
-            });
-            Circle circle = new Circle(5.0, Color.BLACK);
-            FadeTransition fadeTransition = new FadeTransition(Duration.minutes(2), circle);
-            fadeTransition.setFromValue(0);
-            fadeTransition.setToValue(1.0);
-            fadeTransition.play();
-            VBox box = (VBox) GeneticAlgorithmViewController.getSelectedNode(i);
-            assert box != null;
-            box.setStyle("-fx-background-color: green");
-
-            VBox box2 = (VBox) GeneticAlgorithmViewController.getSelectedNode(NUM_INDIVIDUAL - i - 1);
-            assert box2 != null;
-            box2.setStyle("-fx-background-color: green");
-            box.setStyle(null);
-            box2.setStyle(null);
+            shouldUpdateUI.set(2);
+            crossover(population.get(i), population.get(NUM_INDIVIDUAL - i - 1));
         }
-        for (int i = 0; i < NUM_INDIVIDUAL / 2; i++)
+        for (int i = 0; i < NUM_INDIVIDUAL / 2; i++) {
+            shouldUpdateUI.set(3);
             mutate(population.get(i));
+        }
         return (BackPack) getBestIndividual();
     }
 

@@ -1,11 +1,13 @@
 package algorithm;
 
+import javafx.beans.property.SimpleIntegerProperty;
 import model.BackPack;
 import model.Individual;
 
 import java.util.*;
 
 public abstract class HeuristicAlgorithm implements Algorithm {
+    public static SimpleIntegerProperty shouldUpdateUI = new SimpleIntegerProperty();
     public static final double SATISFY_WEIGHT_LESS = 0.2;
     public static final int NUM_INDIVIDUAL = 10;
     public static final int MAX_GENERATION = 20;
@@ -14,6 +16,7 @@ public abstract class HeuristicAlgorithm implements Algorithm {
     private List<Individual> population = new ArrayList<Individual>();
 
     public HeuristicAlgorithm() {
+        shouldUpdateUI.set(0);
         initPopulation();
     }
 
@@ -25,6 +28,7 @@ public abstract class HeuristicAlgorithm implements Algorithm {
         while (!isSatisfy(bestInd) && generationLevel++ < MAX_GENERATION) {
             bestInd = doOtherSteps();
         }
+        shouldUpdateUI.set(4);
         return bestInd;
     }
 

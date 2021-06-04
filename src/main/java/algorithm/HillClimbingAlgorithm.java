@@ -66,6 +66,7 @@ public class HillClimbingAlgorithm extends HeuristicAlgorithm {
             }
         }
         bp.updateElement(j, res.getWeight(), res.getImageFile());
+        System.out.println(getGenerationLevel());
     }
 
     public BackPack doOtherSteps() {
@@ -78,5 +79,9 @@ public class HillClimbingAlgorithm extends HeuristicAlgorithm {
         HillClimbingAlgorithm hc = new HillClimbingAlgorithm();
         Individual bestInd = hc.solve();
         System.out.println(bestInd + ", " + bestInd.getWeight());
+    }
+
+    public BackPack getPopulations() {
+        return bp;
     }
 }

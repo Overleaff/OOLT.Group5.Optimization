@@ -19,15 +19,14 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.BackPack;
 import model.Element;
-import view.BackpackView;
-import view.ElementView;
-import view.MainMenuView;
-import view.ViewSwitcher;
+import model.Population;
+import view.*;
 
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Scanner;
 
-public class GeneticAlgorithmViewController {
+public class GeneticAlgorithmViewController implements Observer{
     public static final int TOTAL_COLUMNS_BP = 4;
     public Element[] elements;
     public ObservableList<BackPack> backPacks;
@@ -41,8 +40,12 @@ public class GeneticAlgorithmViewController {
     @FXML
     public Label tipLabel = new Label();
 
+    public Scanner sc = new Scanner(System.in);
+
+    public BackPack bestInd = new BackPack();
+
     public GeneticAlgorithmViewController() {
-        this.geneticAlgorithm = new GeneticAlgorithm();
+        this.geneticAlgorithm = new GeneticAlgorithm(this);
     }
 
     @FXML
@@ -56,8 +59,7 @@ public class GeneticAlgorithmViewController {
         backPacks.addListener((ListChangeListener<BackPack>) change -> updateGenerations());
 
         Platform.runLater(() -> {
-            BackPack bestInd = (BackPack) geneticAlgorithm.solve();
-            updateBestIndividual(bestInd);
+            bestInd = (BackPack) geneticAlgorithm.solve();
         });
     }
 
@@ -74,7 +76,7 @@ public class GeneticAlgorithmViewController {
         Label noteLabel = new Label();
         if(geneticAlgorithm.getGenerationLevel() >= HeuristicAlgorithm.MAX_GENERATION)
             noteLabel.setText("Maximum generations reached.");
-        if(!geneticAlgorithm.isSatisfy(bestInd))
+        if(!Population.isSatisfy(bestInd))
             noteLabel.setText(noteLabel.getText() + " " + "Best individual is not optimized.");
         else
             noteLabel.setText(noteLabel.getText() + " " + "Best individual is optimized. Problem solved!");
@@ -169,5 +171,12 @@ public class GeneticAlgorithmViewController {
 
     public void setTipLabel(Label tipLabel) {
         this.tipLabel = tipLabel;
+    }
+
+    @Override
+    public void update() {
+        System.out.println("Nhap 1 so nguyen vao ?");
+        sc.nextInt();
+        updateBestIndividual(bestInd);
     }
 }

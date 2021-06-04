@@ -1,5 +1,6 @@
 package algorithm;
 
+import controller.GeneticAlgorithmViewController;
 import model.BackPack;
 import model.Element;
 import model.Individual;
@@ -17,8 +18,9 @@ public class HillClimbingAlgorithm extends HeuristicAlgorithm {
     // search to find the replaced item that let this new state closest to the goal.
     private BackPack bp;
 
-    public HillClimbingAlgorithm() {
-        this.bp = (BackPack) getBestIndividual();
+    public HillClimbingAlgorithm(GeneticAlgorithmViewController controller) {
+        super(controller);
+        this.bp = (BackPack) getPopVariable().getBestIndividual();
     }
 
     // return the Element with weight that closest to target and still < target
@@ -73,10 +75,10 @@ public class HillClimbingAlgorithm extends HeuristicAlgorithm {
         bestNextState(PoolElements.getElements());
         return this.bp;
     }
-
+/*
     public static void main(String[] args) {
         HillClimbingAlgorithm hc = new HillClimbingAlgorithm();
         Individual bestInd = hc.solve();
         System.out.println(bestInd + ", " + bestInd.getWeight());
-    }
+    }*/
 }

@@ -1,63 +1,61 @@
 package algorithm;
 
-import model.BackPack;
+import controller.GeneticAlgorithmViewController;
 import model.Individual;
+import model.Population;
+import view.Observer;
+import view.View;
 
-import java.util.*;
+import java.util.ArrayList;
 
-public abstract class HeuristicAlgorithm implements Algorithm {
-    public static final double SATISFY_WEIGHT_LESS = 0.2;
-    public static final int NUM_INDIVIDUAL = 10;
+public abstract class HeuristicAlgorithm implements Algorithm, Publisher {
     public static final int MAX_GENERATION = 20;
 
     private int generationLevel = 0;
-    private List<Individual> population = new ArrayList<Individual>();
+    private ArrayList<Observer> subscribes;
+    private Population population = new Population();
 
-    public HeuristicAlgorithm() {
-        initPopulation();
+    public HeuristicAlgorithm(GeneticAlgorithmViewController controller) {
+        subscribes = new ArrayList<>();
+        subscribes.add(controller);
+        population.initPopulation();
     }
 
     public abstract Individual doOtherSteps();
 
     public final Individual solve() {
-        Individual bestInd = getBestIndividual();
+        Individual bestInd = population.getBestIndividual();
         // continue loop when we not find any satisfy Individual and generationLevel is not enough
-        while (!isSatisfy(bestInd) && generationLevel++ < MAX_GENERATION) {
+        while (!Population.isSatisfy(bestInd) && generationLevel++ < MAX_GENERATION) {
             bestInd = doOtherSteps();
+            notifySubscribers();
         }
         return bestInd;
     }
 
-    public void initPopulation() {
-        for (int i = 0; i < NUM_INDIVIDUAL; i++) {
-            population.add(new BackPack());
-        }
+    public Population getPopVariable(){
+        return this.population;
     }
 
     public int getGenerationLevel() {
         return this.generationLevel;
     }
 
-    public List<Individual> getPopulation() {
-        return this.population;
+    @Override
+    public void subscribe(Observer o) {
+        subscribes.add(o);
     }
 
-    public Individual getBestIndividual() {
-        double max = -1;
-        Individual resIndividual = null;
-        for (Individual i : population) {
-            if (i.fitness() > max) {
-                max = i.fitness();
-                resIndividual = i;
-            }
+    @Override
+    public void unsubscribe(Observer o) {
+        subscribes.remove(o);
+    }
+
+    @Override
+    public void notifySubscribers(){
+        for(Observer o : subscribes){
+            // update each view
+            o.update();
         }
-        return resIndividual;
-    }
-
-    public boolean isSatisfy(Individual individual) {
-        // kiểm tra xem (maxWeight - weight của bestIndividual) đã nhỏ hơn SATISFY_WEIGHT_LESS chưa,
-        // nếu rồi thì return true; khong thì false
-        double tmp = individual.MAX_WEIGHT - individual.getWeight();
-        return tmp <= SATISFY_WEIGHT_LESS && tmp >= 0;
     }
 }

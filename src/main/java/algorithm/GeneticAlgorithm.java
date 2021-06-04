@@ -1,19 +1,9 @@
 package algorithm;
 
 import controller.GeneticAlgorithmViewController;
-import javafx.animation.FadeTransition;
-import javafx.animation.FillTransition;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.util.Duration;
-import model.BackPack;
-import model.Element;
-import model.Individual;
+import model.*;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -22,16 +12,11 @@ public class GeneticAlgorithm extends HeuristicAlgorithm {
 
     private ObservableList<BackPack> population = FXCollections.observableArrayList();
 
-    public GeneticAlgorithm() {
-        for (Individual i : getPopulation()) {
+    public GeneticAlgorithm(GeneticAlgorithmViewController controller) {
+        super(controller);
+        for (Individual i : getPopVariable().getPopulation()) {
             population.add((BackPack) i);
         }
-    }
-
-    public static void main(String[] args) {
-        GeneticAlgorithm gA = new GeneticAlgorithm();
-        Individual bestInd = gA.solve();
-        System.out.println(bestInd + ", " + bestInd.getWeight());
     }
 
     public BackPack doOtherSteps() {
@@ -39,29 +24,14 @@ public class GeneticAlgorithm extends HeuristicAlgorithm {
         Collections.sort(
                 population, Comparator.comparingDouble(BackPack::fitness)
         );
-        for (int i = 0; i < NUM_INDIVIDUAL / 2; i++) {
-            int finalI = i;
-            Platform.runLater(() -> {
-                crossover(population.get(finalI), population.get(NUM_INDIVIDUAL - finalI - 1));
-            });
-            Circle circle = new Circle(5.0, Color.BLACK);
-            FadeTransition fadeTransition = new FadeTransition(Duration.minutes(2), circle);
-            fadeTransition.setFromValue(0);
-            fadeTransition.setToValue(1.0);
-            fadeTransition.play();
-            VBox box = (VBox) GeneticAlgorithmViewController.getSelectedNode(i);
-            assert box != null;
-            box.setStyle("-fx-background-color: green");
-
-            VBox box2 = (VBox) GeneticAlgorithmViewController.getSelectedNode(NUM_INDIVIDUAL - i - 1);
-            assert box2 != null;
-            box2.setStyle("-fx-background-color: green");
-            box.setStyle(null);
-            box2.setStyle(null);
+        for (int i = 0; i < Population.NUM_INDIVIDUAL / 2; i++) {
+            crossover(population.get(i), population.get(Population.NUM_INDIVIDUAL - i - 1));
         }
-        for (int i = 0; i < NUM_INDIVIDUAL / 2; i++)
+        // add notify method here
+        for (int i = 0; i < Population.NUM_INDIVIDUAL / 2; i++)
             mutate(population.get(i));
-        return (BackPack) getBestIndividual();
+        // add notify method here
+        return (BackPack) getPopVariable().getBestIndividual();
     }
 
     public void crossover(BackPack g1, BackPack g2) {
@@ -91,4 +61,10 @@ public class GeneticAlgorithm extends HeuristicAlgorithm {
     public ObservableList<BackPack> getPopulations() {
         return population;
     }
+
+    /*public static void main(String[] args) {
+        GeneticAlgorithm gA = new GeneticAlgorithm();
+        Individual bestInd = gA.solve();
+        System.out.println(bestInd + ", " + bestInd.getWeight());
+    }*/
 }

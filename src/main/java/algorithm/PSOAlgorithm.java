@@ -2,7 +2,6 @@ package algorithm;
 
 //import view.View;
 
-import controller.GeneticAlgorithmViewController;
 import model.BackPack;
 import model.Element;
 import model.Individual;
@@ -17,8 +16,7 @@ public class PSOAlgorithm extends HeuristicAlgorithm {
     private ArrayList<String> abc;
     private Element[] elementsList;
 
-    public PSOAlgorithm(GeneticAlgorithmViewController controller, BackPack in) {
-        super(controller);
+    public PSOAlgorithm(BackPack in) {
         this.population = (ArrayList<Individual>) getPopVariable().getPopulation();
         this.elementsList = PoolElements.getElements();
         abc = PSOAlgorithm.run(in);

@@ -1,10 +1,6 @@
 package algorithm;
 
-import controller.GeneticAlgorithmViewController;
-import model.BackPack;
-import model.Element;
-import model.Individual;
-import model.PoolElements;
+import model.*;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -18,13 +14,12 @@ public class HillClimbingAlgorithm extends HeuristicAlgorithm {
     // search to find the replaced item that let this new state closest to the goal.
     private BackPack bp;
 
-    public HillClimbingAlgorithm(GeneticAlgorithmViewController controller) {
-        super(controller);
-        this.bp = (BackPack) getPopVariable().getBestIndividual();
+    public HillClimbingAlgorithm() {
+        this.bp = (BackPack)getPopVariable().getBestIndividual();
     }
 
     // return the Element with weight that closest to target and still < target
-    private Element binarySearch(double target, Element[] a) {
+    private static Element binarySearch(double target, Element[] a) {
         int l = 0;
         int r = a.length - 1;
         while (l + 1 < r) {
@@ -38,7 +33,7 @@ public class HillClimbingAlgorithm extends HeuristicAlgorithm {
         return target - a[l].getWeight() > 0 ? a[l] : new Element(0);
     }
 
-    public Element[] ElementOutBack(Element[] PoolElements) {
+    public static Element[] ElementOutBack(BackPack bp, Element[] PoolElements) {
         Element[] ElementsOutBack = new Element[Element.MAX_ELEMENTS - bp.getNumOfElement() + 1];
         int j = 0;
         for (Element poolElement : PoolElements) {
@@ -50,8 +45,8 @@ public class HillClimbingAlgorithm extends HeuristicAlgorithm {
         return ElementsOutBack;
     }
 
-    public void bestNextState(Element[] PoolElements) {
-        Element[] elementsOutBack = ElementOutBack(PoolElements);
+    public static void bestNextState(BackPack bp, Element[] PoolElements) {
+        Element[] elementsOutBack = ElementOutBack(bp, PoolElements);
         Arrays.sort(elementsOutBack, Comparator.comparingDouble(Element::getWeight));
         double min = 100;
         int j = 0;
@@ -72,7 +67,7 @@ public class HillClimbingAlgorithm extends HeuristicAlgorithm {
 
     public BackPack doOtherSteps() {
         // return new better state then update to this.bp
-        bestNextState(PoolElements.getElements());
+        bestNextState(this.bp, PoolElements.getElements());
         return this.bp;
     }
 /*

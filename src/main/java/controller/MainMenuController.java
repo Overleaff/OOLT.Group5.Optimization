@@ -1,19 +1,16 @@
 package controller;
 
 import javafx.event.ActionEvent;
-import view.GeneticAlgorithmView;
+import view.InitPopulationView;
+import view.View;
 import view.ViewSwitcher;
 
 import java.io.IOException;
 
-public class MainMenuController {
-    public void geneticAlgorithmButtonClicked(ActionEvent actionEvent) throws IOException {
-        ViewSwitcher.switchTo(new GeneticAlgorithmView());
-    }
+public class MainMenuController extends Controller {
 
-    public void psoButtonClicked(ActionEvent actionEvent) {
-    }
-
-    public void hillClimbingButtonClicked(ActionEvent actionEvent) {
+    public void nextButton(ActionEvent actionEvent) throws IOException {
+        Controller.population.initPopulation();
+        ViewSwitcher.switchTo(new InitPopulationView());
     }
 }

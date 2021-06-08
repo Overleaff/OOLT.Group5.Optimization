@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -8,6 +9,7 @@ import javafx.stage.Stage;
 
 import view.*;
 
+import java.io.IOException;
 import java.util.Objects;
 
 public class Main extends Application {
@@ -27,5 +29,6 @@ public class Main extends Application {
         primaryStage.setTitle("Evolutionary Algorithms Simulator");
         primaryStage.setScene(scene);
         primaryStage.show();
+
     }
 }

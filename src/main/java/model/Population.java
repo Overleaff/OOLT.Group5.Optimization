@@ -36,4 +36,12 @@ public class Population {
         double tmp = individual.MAX_WEIGHT - individual.getWeight();
         return tmp <= SATISFY_WEIGHT_LESS && tmp >= 0;
     }
+
+    public static ArrayList<BackPack> toBackPackArrays(Population population){
+        ArrayList<BackPack> ans = new ArrayList<>();
+        for(Individual i : population.getPopulation()){
+            ans.add((BackPack) i);
+        }
+        return ans;
+    }
 }

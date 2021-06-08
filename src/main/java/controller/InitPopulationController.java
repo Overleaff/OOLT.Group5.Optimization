@@ -24,19 +24,15 @@ public class InitPopulationController extends Controller {
         Controller.generationLevel++;
     }
 
-    public void backButtonClicked(ActionEvent actionEvent) throws IOException {
-        ViewSwitcher.switchTo(new MainMenuView());
-    }
-
-
     public void geneticAlgorithmButtonClicked(ActionEvent actionEvent) throws IOException {
         ViewSwitcher.switchTo(new GeneticAlgorithmView());
     }
 
-    public void psoButtonClicked(ActionEvent actionEvent) {
+    public void psoButtonClicked(ActionEvent actionEvent) throws IOException {
 
     }
 
-    public void hillClimbingButtonClicked(ActionEvent actionEvent) {
+    public void hillClimbingButtonClicked(ActionEvent actionEvent) throws IOException {
+        ViewSwitcher.switchTo(new HillClimbingView());
     }
 }

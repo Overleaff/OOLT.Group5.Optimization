@@ -45,7 +45,7 @@ public class HillClimbingAlgorithm extends HeuristicAlgorithm {
         return ElementsOutBack;
     }
 
-    public static void bestNextState(BackPack bp, Element[] PoolElements) {
+    public static BackPack bestNextState(BackPack bp, Element[] PoolElements) {
         Element[] elementsOutBack = ElementOutBack(bp, PoolElements);
         Arrays.sort(elementsOutBack, Comparator.comparingDouble(Element::getWeight));
         double min = 100;
@@ -62,7 +62,10 @@ public class HillClimbingAlgorithm extends HeuristicAlgorithm {
                 j = i;
             }
         }
-        bp.updateElement(j, res.getWeight(), res.getImageFile());
+        BackPack newBp = new BackPack(bp);
+        newBp.updateElement(j, res.getWeight(), res.getImageFile());
+        System.out.println(newBp);
+        return newBp;
     }
 
     public BackPack doOtherSteps() {

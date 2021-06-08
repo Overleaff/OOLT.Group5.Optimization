@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import model.Population;
 import view.InitPopulationView;
+import view.View;
 import view.ViewSwitcher;
 
 import java.io.IOException;
@@ -25,5 +26,10 @@ public class GeneticAlgorithmController extends Controller {
     public void visualize(){
         /*GeneticAlgorithm.crossOverStep(Population.toBackPackArrays(population));*/
         GeneticAlgorithm.crossOverStep(Population.toBackPackArrays(population));
+    }
+
+    public void backButtonClicked() throws IOException{
+        generationLevel--;
+        ViewSwitcher.switchTo(new InitPopulationView());
     }
 }

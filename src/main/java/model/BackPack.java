@@ -20,6 +20,16 @@ public class BackPack implements Individual {
             elements[i] = new Element(0, "");
     }
 
+    public BackPack(BackPack bp){
+        for(int i = 0; i< bp.getNumOfElement(); i++){
+            this.elements[i] = bp.getElements()[i];
+            this.weight += this.elements[i].getWeight();
+            numOfElement++;
+        }
+        for (int i = bp.getNumOfElement(); i < Element.MAX_ELEMENTS; i++)
+            elements[i] = new Element(0, "");
+    }
+
     public static void main(String[] args) {
         BackPack bp = new BackPack();
         Element[] elements = bp.getElements();

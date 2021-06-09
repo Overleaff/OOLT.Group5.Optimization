@@ -18,6 +18,7 @@ import java.util.Objects;
 
 public class Controller {
     protected static Population population = new Population();
+    protected static BackPack bestInd = new BackPack();
     public static int generationLevel = 0;
     public static final int TOTAL_COLUMNS_BP = 4;
 

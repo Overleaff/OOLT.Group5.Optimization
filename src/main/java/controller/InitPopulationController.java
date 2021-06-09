@@ -20,7 +20,9 @@ public class InitPopulationController extends Controller {
             backPacks.add((BackPack) i);
         }
         Controller.updateGenerations(generationsVBox, backPacks);
-        Controller.updateBestIndividual(generationsVBox, (BackPack) population.getBestIndividual());
+        if(generationLevel == 0)
+            Controller.bestInd = (BackPack) population.getBestIndividual();
+        Controller.updateBestIndividual(generationsVBox, Controller.bestInd);
         Controller.generationLevel++;
     }
 

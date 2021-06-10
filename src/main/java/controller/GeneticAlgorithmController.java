@@ -29,7 +29,7 @@ public class GeneticAlgorithmController extends Controller {
     }
 
     public void backButtonClicked() throws IOException{
-        generationLevel--;
+        //generationLevel--;
         ViewSwitcher.switchTo(new InitPopulationView());
     }
 }

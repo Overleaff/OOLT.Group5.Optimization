@@ -29,16 +29,4 @@ public class PoolElements {
         }
         return singleton_instant.elements;
     }
-
-    public static void main(String[] args){
-        Element[] elements = PoolElements.getElements();
-        for(int i = 0 ; i < Element.MAX_ELEMENTS; i++){
-            System.out.println(elements[i].getWeight()+ " " + elements[i].getImageFile());
-        }
-        System.out.println("");
-        Element[] elements1 = PoolElements.getElements();
-        for(int i = 0 ; i < Element.MAX_ELEMENTS; i++){
-            System.out.println(elements1[i].getWeight()+ " " + elements1[i].getImageFile());
-        }
-    }
 }

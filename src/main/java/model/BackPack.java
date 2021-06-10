@@ -20,8 +20,8 @@ public class BackPack implements Individual {
             elements[i] = new Element(0, "");
     }
 
-    public BackPack(BackPack bp){
-        for(int i = 0; i< bp.getNumOfElement(); i++){
+    public BackPack(BackPack bp) {
+        for (int i = 0; i < bp.getNumOfElement(); i++) {
             this.elements[i] = bp.getElements()[i];
             this.weight += this.elements[i].getWeight();
             numOfElement++;
@@ -67,7 +67,6 @@ public class BackPack implements Individual {
             elements[i] = new Element(weight, imgFile);
             this.weight += weight - oldWei;
         }
-
     }
 
     public boolean isContain(Element e) {

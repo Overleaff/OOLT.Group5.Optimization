@@ -1,5 +1,6 @@
 package controller;
 
+import algorithm.HeuristicAlgorithm;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
@@ -14,14 +15,14 @@ public class InitPopulationController extends Controller {
     @FXML
     public VBox generationsVBox = new VBox();
     private ArrayList<BackPack> backPacks = new ArrayList<>();
+
     @FXML
     public void initialize() {
-        for(Individual i : population.getPopulation()){
+        for (Individual i : population.getPopulation()) {
             backPacks.add((BackPack) i);
         }
-        Controller.updateGenerations(generationsVBox, backPacks);
-        Controller.updateBestIndividual(generationsVBox, (BackPack) population.getBestIndividual());
-        Controller.generationLevel++;
+        updateGenerations(generationsVBox, backPacks);
+        HeuristicAlgorithm.generationLevel++;
     }
 
     public void geneticAlgorithmButtonClicked(ActionEvent actionEvent) throws IOException {

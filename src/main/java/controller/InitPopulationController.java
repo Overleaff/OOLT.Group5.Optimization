@@ -7,7 +7,6 @@ import model.BackPack;
 import model.Individual;
 import view.*;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class InitPopulationController extends Controller {
@@ -26,15 +25,15 @@ public class InitPopulationController extends Controller {
         Controller.generationLevel++;
     }
 
-    public void geneticAlgorithmButtonClicked(ActionEvent actionEvent) throws IOException {
-        ViewSwitcher.switchTo(new GeneticAlgorithmView());
+    public void geneticAlgorithmButtonClicked(ActionEvent actionEvent) {
+        ViewSwitcher.switchTo(View.GENETIC);
     }
 
-    public void psoButtonClicked(ActionEvent actionEvent) throws IOException {
-
+    public void psoButtonClicked(ActionEvent actionEvent) {
+        ViewSwitcher.switchTo(View.PSO);
     }
 
-    public void hillClimbingButtonClicked(ActionEvent actionEvent) throws IOException {
-        ViewSwitcher.switchTo(new HillClimbingView());
+    public void hillClimbingButtonClicked(ActionEvent actionEvent) {
+        ViewSwitcher.switchTo(View.HILLCLIMBING);
     }
 }

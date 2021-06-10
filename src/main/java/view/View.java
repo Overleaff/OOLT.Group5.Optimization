@@ -11,7 +11,20 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public abstract class View {
-    protected static Scene scene;
-    public abstract Parent initView() throws IOException;
+public enum View {
+    MAIN("/fxml/MainMenu.fxml"),
+    INIT("/fxml/InitPopulation.fxml"),
+    GENETIC("/fxml/GeneticAlgorithm.fxml"),
+    PSO("/fxml/PSOAlgorithm.fxml"),
+    HILLCLIMBING("/fxml/HillClimbing.fxml");
+
+    private String fileName;
+
+    View(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
 }

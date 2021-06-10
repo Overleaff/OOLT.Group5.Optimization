@@ -1,7 +1,6 @@
 package controller;
 
 import algorithm.HillClimbingAlgorithm;
-import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,7 +17,6 @@ import model.PoolElements;
 import model.Population;
 import view.*;
 
-import java.io.IOException;
 import java.util.Objects;
 
 public class HillClimbingController extends Controller{
@@ -62,12 +60,12 @@ public class HillClimbingController extends Controller{
     }
 
 
-    public void updateClicked(ActionEvent actionEvent) throws IOException {
-        ViewSwitcher.switchTo(new InitPopulationView());
+    public void updateClicked(ActionEvent actionEvent) {
+        ViewSwitcher.switchTo(View.INIT);
     }
 
-    public void finishClicked(ActionEvent actionEvent) throws IOException {
-        ViewSwitcher.switchTo(new MainMenuView());
+    public void finishClicked(ActionEvent actionEvent) {
+        ViewSwitcher.switchTo(View.MAIN);
     }
 
     public void nextStateClicked(){
@@ -91,7 +89,6 @@ public class HillClimbingController extends Controller{
                 }
                 if(!flyItem.isVisible() && !flyItemBack.isVisible()){
                     BackPack newBest = HillClimbingAlgorithm.bestNextState(bestInd, PoolElements.getElements());
-                    System.out.println(newBest.fitness());
                     updateBestIndividual(newState, newBest);
                     newState.setVisible(true);
                     stop();

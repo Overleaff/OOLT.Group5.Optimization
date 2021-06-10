@@ -4,17 +4,14 @@ import algorithm.GeneticAlgorithm;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import model.Population;
-import view.InitPopulationView;
 import view.View;
 import view.ViewSwitcher;
-
-import java.io.IOException;
 
 public class GeneticAlgorithmController extends Controller {
     // add next Button
     @FXML
-    public void nextButton(ActionEvent ac) throws IOException{
-        ViewSwitcher.switchTo(new InitPopulationView());
+    public void nextButton(ActionEvent ac){
+        ViewSwitcher.switchTo(View.INIT);
     }
     // add crossover button
     // add mutate button
@@ -28,8 +25,8 @@ public class GeneticAlgorithmController extends Controller {
         GeneticAlgorithm.crossOverStep(Population.toBackPackArrays(population));
     }
 
-    public void backButtonClicked() throws IOException{
+    public void backButtonClicked(){
         generationLevel--;
-        ViewSwitcher.switchTo(new InitPopulationView());
+        ViewSwitcher.switchTo(View.MAIN);
     }
 }

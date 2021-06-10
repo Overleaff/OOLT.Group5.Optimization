@@ -19,11 +19,11 @@ public class Main extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage){
         var scene = new Scene(new Pane());
 
         ViewSwitcher.setScene(scene);
-        ViewSwitcher.switchTo(new MainMenuView());
+        ViewSwitcher.switchTo(View.MAIN);
 
         primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/icon/mainicon.png"))));
         primaryStage.setTitle("Evolutionary Algorithms Simulator");

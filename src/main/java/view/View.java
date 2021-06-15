@@ -1,17 +1,19 @@
-
 package view;
 
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import model.BackPack;
-import model.Individual;
-import model.Population;
+public enum View {
+    MAIN("/fxml/MainMenu.fxml"),
+    INIT("/fxml/InitPopulation.fxml"),
+    GENETIC("/fxml/GeneticAlgorithm.fxml"),
+    PSO("/fxml/PSOAlgorithm.fxml"),
+    HILL_CLIMBING("/fxml/HillClimbing.fxml");
 
-import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
+    private String fileName;
 
-public abstract class View {
-    protected static Scene scene;
-    public abstract Parent initView() throws IOException;
+    View(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
 }

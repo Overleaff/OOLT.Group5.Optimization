@@ -6,11 +6,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
 import model.BackPack;
+import model.PoolElements;
 import model.Population;
 import view.BackpackView;
 import view.ElementView;
@@ -20,6 +23,8 @@ import java.util.Objects;
 
 public class Controller {
     protected static Population population = new Population();
+    protected static BackPack bestInd = new BackPack();
+    protected static ArrayList<BackPack> backPacks = new ArrayList<>();
     public static final int TOTAL_COLUMNS_BP = 4;
 
     public static void updateGenerations(VBox generationsVBox, ArrayList<BackPack> backPacks) {
@@ -147,4 +152,9 @@ public class Controller {
         return backPacks.get((TOTAL_COLUMNS_BP + 1) * row + column);
     }
 
+    public static ImageView getRandomItem() {
+        int ran = (int) (Math.random() * 20);
+        ImageView imageView = new ImageView(new Image(Objects.requireNonNull(Controller.class.getResourceAsStream("/img/" + PoolElements.getElements()[ran].getImageFile())), 100, 100, false, false));
+        return imageView;
+    }
 }

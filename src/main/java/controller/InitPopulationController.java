@@ -6,34 +6,39 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
 import model.BackPack;
 import model.Individual;
-import view.*;
+import view.View;
+import view.ViewSwitcher;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class InitPopulationController extends Controller {
     @FXML
-    public VBox generationsVBox = new VBox();
-    private ArrayList<BackPack> backPacks = new ArrayList<>();
+    private VBox generationsVBox = new VBox();
+    private ArrayList<BackPack> initialPopulation = new ArrayList<>();
 
     @FXML
     public void initialize() {
         for (Individual i : population.getPopulation()) {
             backPacks.add((BackPack) i);
+            initialPopulation.add((BackPack) i);
         }
-        updateGenerations(generationsVBox, backPacks);
+        if(initialPopulation.isEmpty())
+            updateGenerations(generationsVBox, backPacks);
+        else
+            updateGenerations(generationsVBox, initialPopulation);
+        bestInd = (BackPack) population.getBestIndividual();
         HeuristicAlgorithm.generationLevel++;
     }
 
-    public void geneticAlgorithmButtonClicked(ActionEvent actionEvent) throws IOException {
-        ViewSwitcher.switchTo(new GeneticAlgorithmView());
+    public void geneticAlgorithmButtonClicked(ActionEvent actionEvent) {
+        ViewSwitcher.switchTo(View.GENETIC);
     }
 
-    public void psoButtonClicked(ActionEvent actionEvent) throws IOException {
+    public void psoButtonClicked(ActionEvent actionEvent) {
 
     }
 
-    public void hillClimbingButtonClicked(ActionEvent actionEvent) throws IOException {
-        ViewSwitcher.switchTo(new HillClimbingView());
+    public void hillClimbingButtonClicked(ActionEvent actionEvent) {
+        ViewSwitcher.switchTo(View.HILL_CLIMBING);
     }
 }

@@ -1,15 +1,13 @@
 package controller;
 
-import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import view.View;
+import view.ViewSwitcher;
 
-import view.*;
-
-import java.io.IOException;
 import java.util.Objects;
 
 public class Main extends Application {
@@ -23,7 +21,7 @@ public class Main extends Application {
         var scene = new Scene(new Pane());
 
         ViewSwitcher.setScene(scene);
-        ViewSwitcher.switchTo(new MainMenuView());
+        ViewSwitcher.switchTo(View.MAIN);
 
         primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/icon/mainicon.png"))));
         primaryStage.setTitle("Evolutionary Algorithms Simulator");

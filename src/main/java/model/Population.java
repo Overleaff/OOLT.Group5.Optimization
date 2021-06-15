@@ -3,7 +3,7 @@ package model;
 import java.util.ArrayList;
 
 public class Population {
-    public static final double SATISFY_WEIGHT_LESS = 0.2;
+    public static final double SATISFY_WEIGHT_LESS = 0.1;
     public static final int NUM_INDIVIDUAL = 10;
 
     private ArrayList<Individual> population = new ArrayList<>();
@@ -44,5 +44,13 @@ public class Population {
             ans.add((BackPack) i);
         }
         return ans;
+    }
+
+    public void setPopulation(ArrayList<BackPack> population) {
+        int i = 0;
+        for(Individual individual : this.population) {
+            individual = population.get(i);
+            ++i;
+        }
     }
 }

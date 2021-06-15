@@ -1,7 +1,6 @@
 package controller;
 
 import javafx.event.ActionEvent;
-import view.InitPopulationView;
 import view.View;
 import view.ViewSwitcher;
 
@@ -11,6 +10,6 @@ public class MainMenuController extends Controller {
 
     public void nextButton(ActionEvent actionEvent) throws IOException {
         Controller.population.initPopulation();
-        ViewSwitcher.switchTo(new InitPopulationView());
+        ViewSwitcher.switchTo(View.INIT);
     }
 }

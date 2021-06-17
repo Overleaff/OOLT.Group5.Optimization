@@ -6,7 +6,7 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" snapToPixel="false" style="-fx-background-color: #151515;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainMenuController">
+<VBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1024.0" snapToPixel="false" style="-fx-background-color: #151515;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainMenuController">
     <children>
         <Label text="Solving Knapsac Problem with" textFill="WHITE">
             <VBox.margin>
@@ -18,7 +18,7 @@
         </Label>
         <Label alignment="CENTER" text="Evolutionary Algorithms" textAlignment="CENTER" wrapText="true" VBox.vgrow="SOMETIMES">
             <font>
-                <Font name="System Bold" size="60.0" />
+                <Font name="System Bold" size="72.0" />
             </font>
             <textFill>
                 <LinearGradient endX="1.0" endY="1.0">

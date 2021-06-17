@@ -45,13 +45,6 @@ public class Controller {
     public static void updateBestIndividual(VBox generationsVBox, BackPack bestInd) {
         Label resultLabel = new Label("Best individual:");
         resultLabel.setStyle("-fx-font-size: 18; -fx-font-weight: bold");
-        Label noteLabel = new Label();
-        if (HeuristicAlgorithm.generationLevel >= HeuristicAlgorithm.MAX_GENERATION)
-            noteLabel.setText("Maximum generations reached.");
-        if (!Population.isSatisfy(bestInd))
-            noteLabel.setText(noteLabel.getText() + " " + "Best individual is not optimized.");
-        else
-            noteLabel.setText(noteLabel.getText() + " " + "Best individual is optimized. Problem solved!");
         Image backpackImage = new Image(Objects.requireNonNull(Controller.class.getResourceAsStream("/icon/backpack.png")), 120, 120, false, false);
         VBox elementBox = new ElementView(backpackImage, "Fitness", String.valueOf(bestInd.fitness()));
         // Add Details button
@@ -65,7 +58,6 @@ public class Controller {
             backpackStage.setScene(backpackScene);
             backpackStage.showAndWait();
         });
-        generationsVBox.getChildren().add(0, noteLabel);
         generationsVBox.getChildren().add(0, detailsButton);
         generationsVBox.getChildren().add(0, elementBox);
         generationsVBox.getChildren().add(0, resultLabel);

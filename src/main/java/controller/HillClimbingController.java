@@ -13,9 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.Element;
@@ -25,7 +23,6 @@ import view.BackpackView;
 import view.View;
 import view.ViewSwitcher;
 
-import java.io.IOException;
 import java.util.Objects;
 
 public class HillClimbingController extends Controller {
@@ -38,14 +35,18 @@ public class HillClimbingController extends Controller {
     @FXML
     private Label stepLabel = new Label();
     @FXML
+    private VBox poolVBox = new VBox();
+    @FXML
     private Button solveButton = new Button();
     @FXML
-    private VBox poolVBox = new VBox();
+    private Button finishButton = new Button();
 
     @FXML
     public void initialize() {
         flyItem.setVisible(false);
         flyBackItem.setVisible(false);
+        flyItem.toFront();
+        flyBackItem.toFront();
         addPoolElements(PoolElements.getElements());
         updateGenerations(generationsFlowPane, bestInd);
     }
@@ -53,13 +54,8 @@ public class HillClimbingController extends Controller {
     public void solveButtonClicked() {
         if (HeuristicAlgorithm.generationLevel++ >= HeuristicAlgorithm.MAX_GENERATION || Population.isSatisfy(bestInd)) {
             solveButton.setDisable(true);
-            stepLabel.setText("");
-            if (HeuristicAlgorithm.generationLevel >= HeuristicAlgorithm.MAX_GENERATION)
-                stepLabel.setText("Maximum generations reached.");
-            if (!Population.isSatisfy(bestInd))
-                stepLabel.setText(stepLabel.getText() + " " + "Best individual is not optimized.");
-            else
-                stepLabel.setText(stepLabel.getText() + " " + "Best individual is optimized. Problem solved!");
+            finishButton.setDisable(true);
+            updateStepLabel();
             updateBestIndividual(generationsFlowPane, bestInd);
         } else {
             bestInd = HillClimbingAlgorithm.bestNextState(bestInd, PoolElements.getElements());
@@ -68,15 +64,34 @@ public class HillClimbingController extends Controller {
         }
     }
 
+    public void finishButtonClicked(ActionEvent event) {
+        solveButton.setDisable(true);
+        finishButton.setDisable(true);
+        while (!Population.isSatisfy(bestInd) && HeuristicAlgorithm.generationLevel++ < HeuristicAlgorithm.MAX_GENERATION) {
+            bestInd = HillClimbingAlgorithm.bestNextState(bestInd, PoolElements.getElements());
+            updateGenerations(generationsFlowPane, bestInd);
+        }
+        updateStepLabel();
+        updateBestIndividual(generationsFlowPane, bestInd);
+    }
+
+    private void updateStepLabel() {
+        stepLabel.setText("");
+        if (HeuristicAlgorithm.generationLevel >= HeuristicAlgorithm.MAX_GENERATION)
+            stepLabel.setText("Maximum generations reached.");
+        if (!Population.isSatisfy(bestInd))
+            stepLabel.setText(stepLabel.getText() + " " + "Best individual is not optimized.");
+        else
+            stepLabel.setText(stepLabel.getText() + " " + "Best individual is optimized. Problem solved!");
+    }
+
     private void nextBestStateAnimation() {
-        flyItem.toFront();
-        flyBackItem.toFront();
         flyItem.getChildren().add(getRandomItem());
         flyBackItem.getChildren().add(getRandomItem());
         flyItem.setVisible(true);
         flyBackItem.setVisible(true);
-        PathTransition fly = new PathTransition(Duration.seconds(2), new Line(500, 400, 1200, 600), flyItem);
-        PathTransition flyBack = new PathTransition(Duration.seconds(2), new Line(1200, 600, 500, 400), flyBackItem);
+        PathTransition fly = new PathTransition(Duration.seconds(2), new Line(600, 450, 1400, 700), flyItem);
+        PathTransition flyBack = new PathTransition(Duration.seconds(2), new Line(1400, 700, 600, 450), flyBackItem);
         fly.play();
         flyBack.play();
         fly.setOnFinished(e -> {
@@ -84,7 +99,7 @@ public class HillClimbingController extends Controller {
             flyBackItem.getChildren().clear();
             flyItem.setVisible(false);
             flyBackItem.setVisible(false);
-            stepLabel.setText("Better state found");
+            stepLabel.setText("Better state found!");
             updateGenerations(generationsFlowPane, bestInd);
         });
     }

@@ -34,7 +34,6 @@ public class Population {
         // kiểm tra xem (maxWeight - weight của bestIndividual) đã nhỏ hơn SATISFY_WEIGHT_LESS chưa,
         // nếu rồi thì return true; khong thì false
         double tmp = individual.MAX_WEIGHT - individual.getWeight();
-        System.out.println(tmp);
         return tmp <= SATISFY_WEIGHT_LESS && tmp >= 0;
     }
 

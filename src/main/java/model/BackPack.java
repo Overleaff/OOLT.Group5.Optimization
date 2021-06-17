@@ -30,14 +30,6 @@ public class BackPack implements Individual {
             elements[i] = new Element(0, "");
     }
 
-    public static void main(String[] args) {
-        BackPack bp = new BackPack();
-        Element[] elements = bp.getElements();
-        for (int i = 0; i < bp.numOfElement; i++) {
-            System.out.println(elements[i].getWeight() + " " + elements[i].getImageFile());
-        }
-    }
-
     //get new random element that not in Backpack yet
     public Element getNewRandomElement() {
         int ran = (int) (Math.random() * Element.MAX_ELEMENTS);

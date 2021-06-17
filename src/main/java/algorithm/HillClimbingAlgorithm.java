@@ -64,7 +64,6 @@ public class HillClimbingAlgorithm extends HeuristicAlgorithm {
         }
         BackPack newBp = new BackPack(bp);
         newBp.updateElement(j, res.getWeight(), res.getImageFile());
-        System.out.println(newBp);
         return newBp;
     }
 

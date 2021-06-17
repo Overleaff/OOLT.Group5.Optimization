@@ -50,7 +50,6 @@ public class PSOAlgorithm extends HeuristicAlgorithm {
             testSum += elementsList[i].getWeight();
         }
         Swarm swarm = new Swarm(10, 1000);
-        System.out.println(bp1.getWeight());
         swarm.runEach(BackPack.MAX_WEIGHT, weight);
 
         for (int i = 0; i < Swarm.finalAns.size(); i++) {

@@ -24,6 +24,7 @@ import view.View;
 import view.ViewSwitcher;
 
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 public class HillClimbingController extends Controller {
     @FXML
@@ -34,6 +35,8 @@ public class HillClimbingController extends Controller {
     private FlowPane generationsFlowPane = new FlowPane();
     @FXML
     private Label stepLabel = new Label();
+    @FXML
+    private Label timeLabel = new Label();
     @FXML
     private VBox poolVBox = new VBox();
     @FXML
@@ -47,6 +50,7 @@ public class HillClimbingController extends Controller {
         flyBackItem.setVisible(false);
         flyItem.toFront();
         flyBackItem.toFront();
+        timeLabel.setText("");
         addPoolElements(PoolElements.getElements());
         updateGenerations(generationsFlowPane, bestInd);
     }
@@ -65,6 +69,7 @@ public class HillClimbingController extends Controller {
     }
 
     public void finishButtonClicked(ActionEvent event) {
+        long start = System.nanoTime();
         solveButton.setDisable(true);
         finishButton.setDisable(true);
         while (!Population.isSatisfy(bestInd) && HeuristicAlgorithm.generationLevel++ < HeuristicAlgorithm.MAX_GENERATION) {
@@ -73,6 +78,8 @@ public class HillClimbingController extends Controller {
         }
         updateStepLabel();
         updateBestIndividual(generationsFlowPane, bestInd);
+        long elapsedTime = System.nanoTime() - start;
+        timeLabel.setText(String.format("Elapsed time: %.3f seconds", (double) elapsedTime / 1_000_000_000));
     }
 
     private void updateStepLabel() {

@@ -28,6 +28,10 @@ public class InitPopulationController extends Controller {
     private VBox poolVBox = new VBox();
     private ArrayList<BackPack> initialPopulation = new ArrayList<>();
 
+    static {
+        population.initPopulation();
+    }
+
     @FXML
     public void initialize() {
         initializePopulation();
@@ -35,22 +39,25 @@ public class InitPopulationController extends Controller {
     }
 
     private void initializePopulation() {
-        population.initPopulation();
+        generationsVBox.getChildren().clear();
         for (Individual i : population.getPopulation()) {
             backPacks.add((BackPack) i);
             initialPopulation.add((BackPack) i);
         }
-        generationsVBox.getChildren().clear();
         updateGenerations(generationsVBox, initialPopulation);
         bestInd = (BackPack) population.getBestIndividual();
         HeuristicAlgorithm.generationLevel++;
     }
 
+    private void reInitializePopulation() {
+
+    }
+
     public void resetButtonClicked(ActionEvent event) {
         population.getPopulation().clear();
         backPacks.clear();
-        generationsVBox.getChildren().clear();
         initialPopulation.clear();
+        population.initPopulation();
         HeuristicAlgorithm.generationLevel = 0;
         initializePopulation();
     }

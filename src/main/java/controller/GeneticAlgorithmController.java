@@ -32,7 +32,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class GeneticAlgorithmController extends Controller {
     private static final int FLYING_ANIMATION_SPEED = 1;
-    private static final int HIGHLIGHT_ANIMATION_SPEED = 1;
+    private static final float HIGHLIGHT_ANIMATION_SPEED = 2.5F;
     @FXML
     private static ScrollPane generationsScrollPane = new ScrollPane();
     @FXML
@@ -43,6 +43,8 @@ public class GeneticAlgorithmController extends Controller {
     private HBox flyBackItem = new HBox();
     @FXML
     private Label stepLabel = new Label();
+    @FXML
+    private Label timeLabel = new Label();
     @FXML
     private Button solveButton = new Button();
     @FXML
@@ -92,6 +94,7 @@ public class GeneticAlgorithmController extends Controller {
     }
 
     public void finishButtonClicked(ActionEvent event) {
+        long start = System.nanoTime();
         solveButton.setDisable(true);
         finishButton.setDisable(true);
         while (!Population.isSatisfy(population.getBestIndividual()) && HeuristicAlgorithm.generationLevel++ < HeuristicAlgorithm.MAX_GENERATION) {
@@ -103,6 +106,8 @@ public class GeneticAlgorithmController extends Controller {
         }
         updateStepLabel();
         updateBestIndividual(generationsVBox, (BackPack) population.getBestIndividual());
+        long elapsedTime = System.nanoTime() - start;
+        timeLabel.setText(String.format("Elapsed time: %.3f seconds", (double) elapsedTime / 1_000_000_000));
     }
 
     private void addPoolElements(Element[] elements) {
@@ -151,16 +156,14 @@ public class GeneticAlgorithmController extends Controller {
         flyItem.setVisible(true);
         flyBackItem.setVisible(true);
 
-        AtomicInteger xCurrent = new AtomicInteger(150), yCurrent = new AtomicInteger(150), yBackCurrent = new AtomicInteger(300), repeat = new AtomicInteger(0);
-        flyItem.setTranslateX(xCurrent.get());
-        flyBackItem.setTranslateX(xCurrent.get());
-        flyItem.setTranslateY(yCurrent.get());
-        flyBackItem.setTranslateY(yBackCurrent.get());
-        AnimationTimer animationTimer = new AnimationTimer() {
+        AtomicInteger yCurrent = new AtomicInteger(150), yBackCurrent = new AtomicInteger(300), repeat = new AtomicInteger(0);
+        flyItem.setTranslateX(0);
+        flyBackItem.setTranslateX(500);
+        AnimationTimer fly = new AnimationTimer() {
             @Override
             public void handle(long l) {
-                flyItem.setTranslateY(yCurrent.addAndGet(3));
-                flyBackItem.setTranslateY(yBackCurrent.addAndGet(-3));
+                flyItem.setTranslateY(yCurrent.getAndAdd(FLYING_ANIMATION_SPEED));
+                flyBackItem.setTranslateY(yBackCurrent.getAndAdd(-FLYING_ANIMATION_SPEED));
                 if (flyItem.getTranslateY() == 300) {
                     yCurrent.set(150);
                     yBackCurrent.set(300);
@@ -174,7 +177,12 @@ public class GeneticAlgorithmController extends Controller {
                     repeat.incrementAndGet();
                 }
                 if (repeat.get() == 5) {
+                    flyItem.setVisible(false);
+                    flyBackItem.setVisible(false);
+                    flyItem.getChildren().clear();
+                    flyBackItem.getChildren().clear();
                     stop();
+                    mutateAnimation();
                 }
             }
         };
@@ -220,12 +228,7 @@ public class GeneticAlgorithmController extends Controller {
                 )
         );
         boxHighlight.play();
-        animationTimer.start();
-        boxHighlight.setOnFinished(e -> {
-            flyItem.setVisible(false);
-            flyBackItem.setVisible(false);
-            mutateAnimation();
-        });
+        fly.start();
     }
 
     private void mutateAnimation() {
@@ -234,17 +237,26 @@ public class GeneticAlgorithmController extends Controller {
 
         flyItem.getChildren().clear();
         flyItem.getChildren().add(getRandomItem());
-        AtomicInteger repeat = new AtomicInteger(0), xCurrent = new AtomicInteger(600);
-        PathTransition fly = new PathTransition(Duration.seconds(FLYING_ANIMATION_SPEED), new Line(1400, 700, xCurrent.get(), 500), flyItem);
-        /*fly.setOnFinished(e -> {
-            if(repeat.incrementAndGet() == 5)
-                fly.stop();
-            flyItem.getChildren().clear();
-            flyItem.getChildren().add(getRandomItem());
-            fly.setNode(flyItem);
-            fly.setPath(new Line(1400, 700, xCurrent.addAndGet(150), 500));
-            fly.play();
-        });*/
+        AtomicInteger xCurrent = new AtomicInteger(900), yCurrent = new AtomicInteger(350), xDestination = new AtomicInteger(50), repeat = new AtomicInteger(0);
+        AnimationTimer fly = new AnimationTimer() {
+            @Override
+            public void handle(long l) {
+                flyItem.setTranslateX(xCurrent.getAndAdd(-5));
+                flyItem.setTranslateY(yCurrent.getAndAdd(-2));
+                if(flyItem.getTranslateY() == 150) {
+                    xCurrent.set(900);
+                    yCurrent.set(350);
+                    flyItem.getChildren().clear();
+                    flyItem.getChildren().add(getRandomItem());
+                    repeat.incrementAndGet();
+                }
+                if(repeat.get() == 5) {
+                    flyItem.setVisible(false);
+                    flyItem.getChildren().clear();
+                    stop();
+                }
+            }
+        };
 
         Timeline boxHighlight = new Timeline(
                 new KeyFrame(
@@ -252,38 +264,33 @@ public class GeneticAlgorithmController extends Controller {
                         new KeyValue(Objects.requireNonNull(getSelectedNode(0)).styleProperty(), "-fx-background-color: green")
                 ),
                 new KeyFrame(
-                        Duration.seconds(HIGHLIGHT_ANIMATION_SPEED),
+                        Duration.seconds(HIGHLIGHT_ANIMATION_SPEED - 0.5),
                         new KeyValue(Objects.requireNonNull(getSelectedNode(0)).styleProperty(), ""),
                         new KeyValue(Objects.requireNonNull(getSelectedNode(1)).styleProperty(), "-fx-background-color: green")
                 ),
                 new KeyFrame(
-                        Duration.seconds(HIGHLIGHT_ANIMATION_SPEED * 2),
+                        Duration.seconds(HIGHLIGHT_ANIMATION_SPEED * 2 - 1),
                         new KeyValue(Objects.requireNonNull(getSelectedNode(1)).styleProperty(), ""),
                         new KeyValue(Objects.requireNonNull(getSelectedNode(2)).styleProperty(), "-fx-background-color: green")
                 ),
                 new KeyFrame(
-                        Duration.seconds(HIGHLIGHT_ANIMATION_SPEED * 3),
+                        Duration.seconds(HIGHLIGHT_ANIMATION_SPEED * 3 - 1.5),
                         new KeyValue(Objects.requireNonNull(getSelectedNode(2)).styleProperty(), ""),
                         new KeyValue(Objects.requireNonNull(getSelectedNode(3)).styleProperty(), "-fx-background-color: green")
                 ),
                 new KeyFrame(
-                        Duration.seconds(HIGHLIGHT_ANIMATION_SPEED * 4),
+                        Duration.seconds(HIGHLIGHT_ANIMATION_SPEED * 4 - 2),
                         new KeyValue(Objects.requireNonNull(getSelectedNode(3)).styleProperty(), ""),
                         new KeyValue(Objects.requireNonNull(getSelectedNode(4)).styleProperty(), "-fx-background-color: green")
                 ),
                 new KeyFrame(
-                        Duration.seconds(HIGHLIGHT_ANIMATION_SPEED * 5),
+                        Duration.seconds(HIGHLIGHT_ANIMATION_SPEED * 5 - 2.5),
                         new KeyValue(Objects.requireNonNull(getSelectedNode(4)).styleProperty(), "")
                 )
         );
-
         boxHighlight.play();
-        fly.play();
+        fly.start();
         boxHighlight.setOnFinished(e -> {
-            flyItem.getChildren().clear();
-            flyBackItem.getChildren().clear();
-            flyItem.setVisible(false);
-            flyBackItem.setVisible(false);
             stepLabel.setText("Better generation found!");
             updateGenerations(generationsVBox, backPacks);
         });

@@ -39,7 +39,7 @@ public class BackpackView extends ScrollPane {
         int column = 0, row = 0;
         for (int i = 0; i < elementsLength; i++) {
             Element element = elements[i];
-            Image elementImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/" + element.getImageFile())), 80, 80, false, false);
+            Image elementImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/" + element.getImageFile())), 120, 120, false, false);
             VBox elementBox = new ElementView(elementImage, element.getImageFile().split("\\.")[0], String.valueOf(element.getWeight()));
             elementBox.setPrefSize(200, 100);
             elementsGridPane.add(elementBox, column, row);

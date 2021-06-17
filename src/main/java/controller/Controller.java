@@ -144,9 +144,14 @@ public class Controller {
         return backPacks.get((TOTAL_COLUMNS_BP + 1) * row + column);
     }
 
-    public static ImageView getRandomItem() {
+    public static VBox getRandomItem() {
         int ran = (int) (Math.random() * 20);
-        ImageView imageView = new ImageView(new Image(Objects.requireNonNull(Controller.class.getResourceAsStream("/img/" + PoolElements.getElements()[ran].getImageFile())), 100, 100, false, false));
-        return imageView;
+        VBox item = new VBox();
+        item.getChildren().add(new ImageView(new Image(Objects.requireNonNull(Controller.class.getResourceAsStream("/img/" + PoolElements.getElements()[ran].getImageFile())), 100, 100, false, false)));
+        Label weight = new Label();
+        weight.setText("Weight: " + PoolElements.getElements()[ran].getWeight());
+        weight.setStyle("-fx-font-size: 14; -fx-font-weight: bold; -fx-background-color: white");
+        item.getChildren().add(weight);
+        return item;
     }
 }

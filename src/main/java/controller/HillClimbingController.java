@@ -1,123 +1,104 @@
 package controller;
 
+import algorithm.HeuristicAlgorithm;
 import algorithm.HillClimbingAlgorithm;
-import javafx.animation.AnimationTimer;
+import javafx.animation.PathTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import model.BackPack;
 import model.Element;
 import model.PoolElements;
 import model.Population;
-import view.*;
+import view.BackpackView;
+import view.View;
+import view.ViewSwitcher;
 
+import java.io.IOException;
 import java.util.Objects;
 
-public class HillClimbingController extends Controller{
-    public static final int MAX_WIDTH = 900;
-    public static final int MAX_HEIGHT = 600;
-    // add bestNextState Button
-    @FXML
-    VBox oldState = new VBox();
-    @FXML
-    VBox newState = new VBox();
-    @FXML
-    private VBox pool = new VBox();
+public class HillClimbingController extends Controller {
     @FXML
     private HBox flyItem = new HBox();
     @FXML
-    private HBox flyItemBack = new HBox();
+    private HBox flyBackItem = new HBox();
     @FXML
-    private Button finishButton;
+    private FlowPane generationsFlowPane = new FlowPane();
     @FXML
-    private Button updateButton;
+    private Label stepLabel = new Label();
     @FXML
-    private Button nextStateButton;
+    private Button solveButton = new Button();
+    @FXML
+    private VBox poolVBox = new VBox();
 
-    private double xCurrentState = oldState.getLayoutX();
-    private double yCurrentState = oldState.getLayoutY();
-    private double xPool = pool.getLayoutX();
-    private double yPool = pool.getLayoutY();
-
-    public void initialize(){
-        updateBestIndividual(oldState, bestInd);
-        poolElementsWindow(pool, PoolElements.getElements());
-
-        flyItem.getChildren().add(getRandomItem());
-        flyItemBack.getChildren().add(getRandomItem());
-        flyItemBack.setVisible(false);
+    private BackPack oldInd = bestInd.clone();
+    @FXML
+    public void initialize() {
         flyItem.setVisible(false);
-        newState.setVisible(false);
-        finishButton.setDisable(true);
-        updateButton.setDisable(true);
-        nextStateButton.setVisible(true);
+        flyBackItem.setVisible(false);
+        addPoolElements(PoolElements.getElements());
+        updateGenerations(generationsFlowPane, bestInd);
     }
 
+    public void solveButtonClicked() {
+        if (HeuristicAlgorithm.generationLevel++ >= HeuristicAlgorithm.MAX_GENERATION || Population.isSatisfy(bestInd)) {
+            solveButton.setDisable(true);
+            stepLabel.setText("");
+            if (HeuristicAlgorithm.generationLevel >= HeuristicAlgorithm.MAX_GENERATION)
+                stepLabel.setText("Maximum generations reached.");
+            if (!Population.isSatisfy(bestInd))
+                stepLabel.setText(stepLabel.getText() + " " + "Best individual is not optimized.");
+            else
+                stepLabel.setText(stepLabel.getText() + " " + "Best individual is optimized. Problem solved!");
+            updateBestIndividual(generationsFlowPane, bestInd);
+        } else {
+            oldInd = bestInd.clone();
+            bestInd = HillClimbingAlgorithm.bestNextState(bestInd, PoolElements.getElements());
+            stepLabel.setText("Searching for next best state...");
+            nextBestStateAnimation();
+        }
+    }
 
-    public void updateClicked(ActionEvent actionEvent) {
+    private void nextBestStateAnimation() {
+        flyItem.toFront();
+        flyBackItem.toFront();
+        // Backpack.diffItem will return item in oldInd but not in bestInd
+        flyItem.getChildren().add(wrapItemInImage(Objects.requireNonNull(BackPack.diffItem(oldInd, bestInd))));
+        flyBackItem.getChildren().add(wrapItemInImage(Objects.requireNonNull(BackPack.diffItem(bestInd, oldInd))));
+        flyItem.setVisible(true);
+        flyBackItem.setVisible(true);
+        PathTransition fly = new PathTransition(Duration.seconds(2), new Line(500, 400, 1200, 600), flyItem);
+        PathTransition flyBack = new PathTransition(Duration.seconds(2), new Line(1200, 600, 500, 400), flyBackItem);
+        fly.play();
+        flyBack.play();
+        fly.setOnFinished(e -> {
+            flyItem.getChildren().clear();
+            flyBackItem.getChildren().clear();
+            flyItem.setVisible(false);
+            flyBackItem.setVisible(false);
+            stepLabel.setText("Better state found");
+            updateGenerations(generationsFlowPane, bestInd);
+        });
+    }
+
+    public void backButtonClicked(ActionEvent actionEvent) {
+        HeuristicAlgorithm.generationLevel = 0;
         ViewSwitcher.switchTo(View.INIT);
     }
 
-    public void finishClicked(ActionEvent actionEvent) {
-        ViewSwitcher.switchTo(View.MAIN);
-    }
-
-    public void nextStateClicked(){
-        flyItem.setVisible(true);
-        flyItemBack.setVisible(true);
-        // create animation that some items move from current state to pool and come back
-        AnimationTimer timer = new AnimationTimer() {
-            @Override
-            public void handle(long l) {
-                flyItem.setTranslateX(xCurrentState++);
-                yCurrentState+=2;
-                flyItem.setTranslateY(yCurrentState);
-
-                flyItemBack.setTranslateX(xPool--);
-                flyItemBack.setTranslateY(yPool--);
-                if(flyItemBack.getTranslateY() < -150){
-                    flyItemBack.setVisible(false);
-                }
-                if(flyItem.getTranslateX() > 150){
-                    flyItem.setVisible(false);
-                }
-                if(!flyItem.isVisible() && !flyItemBack.isVisible()){
-                    BackPack newBest = HillClimbingAlgorithm.bestNextState(bestInd, PoolElements.getElements());
-                    updateBestIndividual(newState, newBest);
-                    newState.setVisible(true);
-                    stop();
-                    if(Population.isSatisfy(newBest)){
-                        finishButton.setDisable(false);
-                        updateButton.setDisable(true);
-                    }
-                    else{
-                        finishButton.setDisable(true);
-                        updateButton.setDisable(false);
-                        Controller.bestInd = newBest;
-                    }
-                }
-            }
-        };
-        timer.start();
-        nextStateButton.setDisable(true);
-    }
-
-    public ImageView getRandomItem(){
-        int ran = (int) (Math.random()*20);
-        ImageView imageItem = new ImageView(new Image(Objects.requireNonNull(
-                Controller.class.getResourceAsStream("/img/"+PoolElements.getElements()[ran].getImageFile()))));
-        imageItem.setFitHeight(75);
-        imageItem.setFitWidth(75);
-        return imageItem;
-    }
-
-    public static void poolElementsWindow(VBox poolBox, Element[] elements){
+    private void addPoolElements(Element[] elements) {
         Image poolElement = new Image(Objects.requireNonNull(Controller.class.getResourceAsStream("/icon/pool.png")), 120, 120, false, false);
         VBox elementBox = new VBox();
         elementBox.getChildren().add(new ImageView(poolElement));
@@ -131,7 +112,11 @@ public class HillClimbingController extends Controller{
             backpackStage.setScene(backpackScene);
             backpackStage.showAndWait();
         });
-        poolBox.getChildren().add(0, detailsButton);
-        poolBox.getChildren().add(0, elementBox);
+        Label titleLabel = new Label("Elements Pool");
+        titleLabel.setStyle("-fx-font-size: 16; -fx-font-weight: bold");
+        poolVBox.getChildren().add(titleLabel);
+        poolVBox.getChildren().add(elementBox);
+        poolVBox.getChildren().add(detailsButton);
+        poolVBox.setSpacing(10);
     }
 }

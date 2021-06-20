@@ -5,8 +5,7 @@ import model.Population;
 
 public abstract class HeuristicAlgorithm implements Algorithm{
     public static final int MAX_GENERATION = 20;
-
-    private int generationLevel = 0;
+    public static int generationLevel = 0;
     private Population population = new Population();
 
     public HeuristicAlgorithm() {
@@ -26,9 +25,5 @@ public abstract class HeuristicAlgorithm implements Algorithm{
 
     public Population getPopVariable(){
         return this.population;
-    }
-
-    public int getGenerationLevel() {
-        return this.generationLevel;
     }
 }

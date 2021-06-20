@@ -6,11 +6,19 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #151515;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainMenuController">
+<VBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" snapToPixel="false" style="-fx-background-color: #151515;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainMenuController">
     <children>
-        <Label alignment="CENTER" prefWidth="600.0" text="Evolutionary Algorithms" textAlignment="CENTER" wrapText="true" VBox.vgrow="SOMETIMES">
+        <Label text="Solving Knapsac Problem with" textFill="WHITE">
+            <VBox.margin>
+                <Insets />
+            </VBox.margin>
             <font>
-                <Font name="System Bold" size="90.0" />
+                <Font size="40.0" />
+            </font>
+        </Label>
+        <Label alignment="CENTER" text="Evolutionary Algorithms" textAlignment="CENTER" wrapText="true" VBox.vgrow="SOMETIMES">
+            <font>
+                <Font name="System Bold" size="60.0" />
             </font>
             <textFill>
                 <LinearGradient endX="1.0" endY="1.0">
@@ -42,26 +50,28 @@
                 <Insets top="10.0" />
             </VBox.margin>
             <font>
-                <Font size="14.0" />
+                <Font size="16.0" />
             </font>
         </Label>
         <Label text="Developed by: Do Quang Khai, Dinh The Kiet &amp; Bui Manh Tu" textAlignment="CENTER" textFill="#bdc3c7" VBox.vgrow="SOMETIMES">
             <font>
-                <Font size="14.0" />
+                <Font size="16.0" />
             </font>
         </Label>
-        <HBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="20.0" BorderPane.alignment="TOP_LEFT">
+        <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="TOP_LEFT">
             <children>
-                <Label>
+                <Button fx:id="nextButton" mnemonicParsing="false" onAction="#nextButton" text="Start Simulator">
                     <font>
-                        <Font name="System Italic" size="14.0" />
+                        <Font size="16.0" />
                     </font>
-                </Label>
-                <Button fx:id="nextButton" mnemonicParsing="false" onAction="#nextButton" text="Start" />
+                </Button>
             </children>
             <padding>
                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
             </padding>
+            <VBox.margin>
+                <Insets top="40.0" />
+            </VBox.margin>
         </HBox>
     </children>
 </VBox>

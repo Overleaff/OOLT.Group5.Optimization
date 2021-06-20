@@ -17,13 +17,13 @@ public class PSOAlgorithm extends HeuristicAlgorithm {
     private Element[] elementsList;
 
     public PSOAlgorithm(BackPack in) {
-        this.population = (ArrayList<Individual>) getPopVariable().getPopulation();
+        this.population = getPopVariable().getPopulation();
         this.elementsList = PoolElements.getElements();
         abc = PSOAlgorithm.run(in);
     }
 
     public Individual doOtherSteps() {
-        int tmp = getGenerationLevel();
+        int tmp = HeuristicAlgorithm.generationLevel;
         if (tmp > abc.size() - 1)
             tmp = abc.size() - 1;
         BackPack bp2 = new BackPack();
@@ -43,20 +43,19 @@ public class PSOAlgorithm extends HeuristicAlgorithm {
 
         ArrayList<Float> weight = new ArrayList<Float>();
 
-        double testSum = 0;
+        //double testSum = 0;
         for (int i = 0; i < Element.MAX_ELEMENTS / 2; i++) {
             weight.add((float) (elementsList[i].getWeight()));
-            System.out.println(elementsList[i].getWeight());
-            testSum += elementsList[i].getWeight();
+            //System.out.println(elementsList[i].getWeight());
         }
         Swarm swarm = new Swarm(10, 1000);
-        System.out.println(bp1.getWeight());
+        //System.out.println(bp1.getWeight());
         swarm.runEach(BackPack.MAX_WEIGHT, weight);
 
-        for (int i = 0; i < Swarm.finalAns.size(); i++) {
+        /*for (int i = 0; i < Swarm.finalAns.size(); i++) {
             System.out.println(Swarm.finalAns.get(i) + " ");
         }
-        System.out.println(testSum);
+        System.out.println(testSum);*/
         return Swarm.finalAns;
 
     }

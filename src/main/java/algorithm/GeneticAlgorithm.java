@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class GeneticAlgorithm extends HeuristicAlgorithm {
-
     private ArrayList<BackPack> population = new ArrayList<>();
 
     public GeneticAlgorithm() {
@@ -64,14 +63,4 @@ public class GeneticAlgorithm extends HeuristicAlgorithm {
         Element e = bp.getNewRandomElement();
         bp.updateElement(ran, e.getWeight(), e.getImageFile());
     }
-
-    public ArrayList<BackPack> getPopulations() {
-        return population;
-    }
-
-    /*public static void main(String[] args) {
-        GeneticAlgorithm gA = new GeneticAlgorithm();
-        Individual bestInd = gA.solve();
-        System.out.println(bestInd + ", " + bestInd.getWeight());
-    }*/
 }

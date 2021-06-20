@@ -27,4 +27,8 @@ public class Element {
 		return this.ImageFile.equals(e.ImageFile);
 	}
 
+	public Element clone(){
+		return new Element(this.weight, this.ImageFile);
+	}
+
 }

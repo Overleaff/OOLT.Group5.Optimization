@@ -15,7 +15,7 @@ public class HillClimbingAlgorithm extends HeuristicAlgorithm {
     private BackPack bp;
 
     public HillClimbingAlgorithm() {
-        this.bp = (BackPack)getPopVariable().getBestIndividual();
+        this.bp = (BackPack) getPopVariable().getBestIndividual();
     }
 
     // return the Element with weight that closest to target and still < target
@@ -52,7 +52,7 @@ public class HillClimbingAlgorithm extends HeuristicAlgorithm {
         int j = 0;
         Element res = new Element(0);
         Element tmp = new Element(0);
-        for (int i = 0; i <= bp.getNumOfElement(); i++) {
+        for (int i = 0; i < bp.getNumOfElement(); i++) {
             double target = Individual.MAX_WEIGHT - bp.getWeight() + bp.getElements()[i].getWeight();
             if (target >= 0)
                 tmp = binarySearch(target, elementsOutBack);
@@ -73,10 +73,4 @@ public class HillClimbingAlgorithm extends HeuristicAlgorithm {
         bestNextState(this.bp, PoolElements.getElements());
         return this.bp;
     }
-/*
-    public static void main(String[] args) {
-        HillClimbingAlgorithm hc = new HillClimbingAlgorithm();
-        Individual bestInd = hc.solve();
-        System.out.println(bestInd + ", " + bestInd.getWeight());
-    }*/
 }

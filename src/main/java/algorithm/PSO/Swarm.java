@@ -75,7 +75,6 @@ public class Swarm {
                 finalAns.add(arr);
             }
 
-
             for (Particle p : particles) {
                 p.updatePersonalBest(maxWeight, weight);
                 updateGlobalBest(p);

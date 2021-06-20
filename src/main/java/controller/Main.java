@@ -1,15 +1,13 @@
 package controller;
 
-import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import view.View;
+import view.ViewSwitcher;
 
-import view.*;
-
-import java.io.IOException;
 import java.util.Objects;
 
 public class Main extends Application {
@@ -19,7 +17,7 @@ public class Main extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage){
+    public void start(Stage primaryStage) throws Exception{
         var scene = new Scene(new Pane());
 
         ViewSwitcher.setScene(scene);

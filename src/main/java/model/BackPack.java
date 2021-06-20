@@ -5,31 +5,36 @@ public class BackPack implements Individual {
     private double weight;
     private Element[] elements = new Element[Element.MAX_ELEMENTS];
     private Element[] poolElements = PoolElements.getElements();
+    public static final int MAX = 10;
+    public static final int MIN = 3;
 
     public BackPack() {
         // mỗi khi tạo 1 backpack mới, thì elements trong cái backpack này được chọn ngẫu nhiên
         // lưu lại 10 items này vào 10 phần tử đầu của itemList for simple
         // element nào k có trong backpack thì để weight = 0, số lượng elements có weight != 0 nên là 10
         // nhớ tính toán weight của backpack và lưu lại
-        for (int i = 0; i < Element.MAX_ELEMENTS / 2; i++) {
+        this.numOfElement = ranRange(MIN, MAX);
+        for (int i = 0; i < numOfElement; i++) {
             elements[i] = getNewRandomElement();
             this.weight += elements[i].getWeight();
-            numOfElement++;
         }
-        for (int i = Element.MAX_ELEMENTS / 2; i < Element.MAX_ELEMENTS; i++)
+        for (int i = numOfElement; i < Element.MAX_ELEMENTS; i++)
             elements[i] = new Element(0, "");
     }
 
-    public BackPack(BackPack bp){
-        for(int i = 0; i< bp.getNumOfElement(); i++){
+    public BackPack(BackPack bp) {
+        this.numOfElement = bp.getNumOfElement();
+        for (int i = 0; i < numOfElement; i++) {
             this.elements[i] = bp.getElements()[i];
             this.weight += this.elements[i].getWeight();
-            numOfElement++;
         }
-        for (int i = bp.getNumOfElement(); i < Element.MAX_ELEMENTS; i++)
+        for (int i = numOfElement; i < Element.MAX_ELEMENTS; i++)
             elements[i] = new Element(0, "");
     }
 
+    public static int ranRange(int lowerRange, int upperRange){
+        return (int)(Math.random()*(upperRange - lowerRange)) + lowerRange;
+    }
     public static void main(String[] args) {
         BackPack bp = new BackPack();
         Element[] elements = bp.getElements();
@@ -67,14 +72,13 @@ public class BackPack implements Individual {
             elements[i] = new Element(weight, imgFile);
             this.weight += weight - oldWei;
         }
-
     }
 
     public boolean isContain(Element e) {
         if (numOfElement == 0)
             return false;
         for (int i = 0; i < numOfElement; i++) {
-            if (elements[i].equals(e))
+            if (elements[i] != null && elements[i].equals(e))
                 return true;
         }
         return false;
@@ -94,5 +98,18 @@ public class BackPack implements Individual {
         if (this.getWeight() > Individual.MAX_WEIGHT)
             return 0.0;
         return (double) Math.round(this.getWeight() * 100) / 100;
+    }
+
+    public static Element diffItem(BackPack b1, BackPack b2){
+        for (Element e: b1.getElements()){
+            if(!b2.isContain(e)){
+                return e;
+            }
+        }
+        return null;
+    }
+
+    public BackPack clone(){
+        return new BackPack(this);
     }
 }

@@ -3,9 +3,13 @@ package model;
 public interface Individual {
     public static final int MAX_WEIGHT = 27; // 27kg
 
-    public abstract double getWeight();
+    double getWeight();
 
-    public abstract double fitness();
+    double fitness();
 
-    public abstract String toString();
+    String toString();
+
+    int getNumOfElement();
+
+    Element[] getElements();
 }

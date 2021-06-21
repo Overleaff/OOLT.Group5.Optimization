@@ -2,6 +2,7 @@ package algorithm;
 
 import model.Individual;
 import model.Population;
+import view.View;
 
 public abstract class HeuristicAlgorithm implements Algorithm{
     public static final int MAX_GENERATION = 20;
@@ -9,10 +10,12 @@ public abstract class HeuristicAlgorithm implements Algorithm{
     private Population population = new Population();
 
     public HeuristicAlgorithm() {
-        population.initPopulation();
+        initPopulation();
     }
 
     public abstract Individual doOtherSteps();
+    public abstract Individual createIndividual();
+    public abstract View getViewFile();
 
     public final Individual solve() {
         Individual bestInd = population.getBestIndividual();
@@ -21,6 +24,15 @@ public abstract class HeuristicAlgorithm implements Algorithm{
             bestInd = doOtherSteps();
         }
         return bestInd;
+    }
+
+    public Population initPopulation(){
+        Population p = new Population();
+        for(int i = 0; i < Population.NUM_INDIVIDUAL; i++){
+            Individual ind = createIndividual();
+            p.addIndividual(ind);
+        }
+        return p;
     }
 
     public Population getPopVariable(){

@@ -19,14 +19,13 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import model.BackPack;
-import model.Element;
-import model.PoolElements;
-import model.Population;
+import model.*;
 import view.BackpackView;
 import view.View;
 import view.ViewSwitcher;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -52,6 +51,15 @@ public class GeneticAlgorithmController extends Controller {
     @FXML
     private VBox poolVBox = new VBox();
 
+    private ArrayList<BackPack> backPacks = new ArrayList<>();
+
+    public GeneticAlgorithmController() {
+        for (Individual i : population.getPopulation()) {
+            backPacks.add((BackPack) i);
+        }
+
+    }
+
     private static Node getSelectedNode(int index) {
         int row = index / (TOTAL_COLUMNS_BP + 1);
         int column = index % (TOTAL_COLUMNS_BP + 1);
@@ -76,36 +84,33 @@ public class GeneticAlgorithmController extends Controller {
 
     public void backButtonClicked(ActionEvent e) {
         HeuristicAlgorithm.generationLevel = 0;
-        ViewSwitcher.switchTo(View.INIT);
+        ViewSwitcher.switchTo(View.MAIN);
     }
 
     public void solveButtonClicked() {
         if (HeuristicAlgorithm.generationLevel++ >= HeuristicAlgorithm.MAX_GENERATION || Population.isSatisfy(population.getBestIndividual())) {
             solveButton.setDisable(true);
             finishButton.setDisable(true);
-            updateBestIndividual(generationsVBox, (BackPack) population.getBestIndividual());
+            updateBestIndividual(generationsVBox, population.getBestIndividual());
         } else {
+            System.out.println(backPacks);
             backPacks = GeneticAlgorithm.crossOverStep(backPacks);
-            population.setPopulation(backPacks);
             backPacks = GeneticAlgorithm.mutateStep(backPacks);
-            population.setPopulation(backPacks);
             animation();
         }
     }
 
-    public void finishButtonClicked(ActionEvent event) {
+    public void finishButtonClicked() {
         long start = System.nanoTime();
         solveButton.setDisable(true);
         finishButton.setDisable(true);
         while (!Population.isSatisfy(population.getBestIndividual()) && HeuristicAlgorithm.generationLevel++ < HeuristicAlgorithm.MAX_GENERATION) {
             backPacks = GeneticAlgorithm.crossOverStep(backPacks);
-            population.setPopulation(backPacks);
             backPacks = GeneticAlgorithm.mutateStep(backPacks);
-            population.setPopulation(backPacks);
             updateGenerations(generationsVBox, backPacks);
         }
         updateStepLabel();
-        updateBestIndividual(generationsVBox, (BackPack) population.getBestIndividual());
+        updateBestIndividual(generationsVBox, population.getBestIndividual());
         long elapsedTime = System.nanoTime() - start;
         timeLabel.setText(String.format("Elapsed time: %.3f seconds", (double) elapsedTime / 1_000_000_000));
     }

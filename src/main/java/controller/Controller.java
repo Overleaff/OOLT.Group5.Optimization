@@ -10,12 +10,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
-import model.BackPack;
-import model.Element;
-import model.PoolElements;
-import model.Population;
+import model.*;
 import view.BackpackView;
 import view.ElementView;
 
@@ -23,27 +19,27 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Controller {
+    protected static HeuristicAlgorithm h;
     protected static Population population = new Population();
-    protected static BackPack bestInd = new BackPack();
-    protected static ArrayList<BackPack> backPacks = new ArrayList<>();
+    protected static Individual bestInd;
     public static final int TOTAL_COLUMNS_BP = 4;
 
-    public static void updateGenerations(VBox generationsVBox, ArrayList<BackPack> backPacks) {
+    public static void updateGenerations(VBox generationsVBox, ArrayList<? extends Individual> individuals) {
         Label generationLabel = new Label("Generation " + HeuristicAlgorithm.generationLevel);
         generationLabel.setStyle("-fx-font-size: 18; -fx-font-weight: bold");
-        generationsVBox.getChildren().add(0, addBackpacksToGrid(backPacks));
+        generationsVBox.getChildren().add(0, addBackpacksToGrid(individuals));
         generationsVBox.getChildren().add(0, generationLabel);
     }
 
-    public static void updateGenerations(FlowPane generationsFlowPane, BackPack backPack) {
+    public static void updateGenerations(FlowPane generationsFlowPane, Individual individual) {
         Label generationLabel = new Label("Generation " + HeuristicAlgorithm.generationLevel);
         generationLabel.setStyle("-fx-font-size: 14; -fx-font-weight: bold");
-        VBox backPackVBox = addBackpackToVBox(backPack);
+        VBox backPackVBox = addBackpackToVBox(individual);
         backPackVBox.getChildren().add(0, generationLabel);
         generationsFlowPane.getChildren().add(0, backPackVBox);
     }
 
-    public static void updateBestIndividual(VBox generationsVBox, BackPack bestInd) {
+    public static void updateBestIndividual(VBox generationsVBox, Individual bestInd) {
         Label resultLabel = new Label("Best individual:");
         resultLabel.setStyle("-fx-font-size: 18; -fx-font-weight: bold");
         Image backpackImage = new Image(Objects.requireNonNull(Controller.class.getResourceAsStream("/icon/backpack.png")), 120, 120, false, false);
@@ -64,7 +60,7 @@ public class Controller {
         generationsVBox.getChildren().add(0, resultLabel);
     }
 
-    public static void updateBestIndividual(FlowPane generationsFlowPane, BackPack bestInd) {
+    public static void updateBestIndividual(FlowPane generationsFlowPane, Individual bestInd) {
         Label resultLabel = new Label("Best individual:");
         resultLabel.setStyle("-fx-font-size: 14; -fx-font-weight: bold");
 
@@ -87,22 +83,22 @@ public class Controller {
         generationsFlowPane.getChildren().add(0, elementBox);
     }
 
-    public static GridPane addBackpacksToGrid(ArrayList<BackPack> backPacks) {
+    public static GridPane addBackpacksToGrid(ArrayList<? extends Individual> individuals) {
         GridPane elementsGridPane = new GridPane();
         elementsGridPane.setHgap(20);
         elementsGridPane.setVgap(10);
         int row = 0, column = 0;
         Image backpackImage = new Image(Objects.requireNonNull(Controller.class.getResourceAsStream("/icon/backpack.png")), 120, 120, false, false);
-        for (BackPack backPack : backPacks) {
-            VBox elementBox = new ElementView(backpackImage, "Fitness", String.valueOf(backPack.fitness()));
+        for (Individual i : individuals) {
+            VBox elementBox = new ElementView(backpackImage, "Fitness", String.valueOf(i.fitness()));
             elementBox.setPrefSize(150, 150);
             elementsGridPane.add(elementBox, column, row);
             // Add Details button
             Button detailsButton = new Button("Details");
             detailsButton.setOnAction(e -> {
-                BackPack bp = getSelectedItem(backPacks, GridPane.getRowIndex(detailsButton), GridPane.getColumnIndex(detailsButton));
+                Individual ind = getSelectedItem(individuals, GridPane.getRowIndex(detailsButton), GridPane.getColumnIndex(detailsButton));
                 Stage backpackStage = new Stage();
-                BackpackView bpView = new BackpackView(String.valueOf(bp.fitness()), bp.getElements(), bp.getNumOfElement());
+                BackpackView bpView = new BackpackView(String.valueOf(ind.fitness()), ind.getElements(), ind.getNumOfElement());
                 Scene backpackScene = new Scene(bpView);
                 backpackStage.getIcons().add(new Image(Objects.requireNonNull(Controller.class.getResourceAsStream("/icon/backpack.png"))));
                 backpackStage.setTitle("Backpack View");
@@ -118,19 +114,19 @@ public class Controller {
         return elementsGridPane;
     }
 
-    public static VBox addBackpackToVBox(BackPack backPack) {
+    public static VBox addBackpackToVBox(Individual individual) {
         VBox elementVBox = new VBox();
         elementVBox.setSpacing(10);
         elementVBox.setAlignment(Pos.CENTER);
         Image backpackImage = new Image(Objects.requireNonNull(Controller.class.getResourceAsStream("/icon/backpack.png")), 120, 120, false, false);
-        VBox elementBox = new ElementView(backpackImage, "Fitness", String.valueOf(backPack.fitness()));
+        VBox elementBox = new ElementView(backpackImage, "Fitness", String.valueOf(individual.fitness()));
         elementBox.setPrefSize(150, 150);
         elementVBox.getChildren().add(elementBox);
         // Add Details button
         Button detailsButton = new Button("Details");
         detailsButton.setOnAction(e -> {
             Stage backpackStage = new Stage();
-            BackpackView bpView = new BackpackView(String.valueOf(backPack.fitness()), backPack.getElements(), backPack.getNumOfElement());
+            BackpackView bpView = new BackpackView(String.valueOf(individual.fitness()), individual.getElements(), individual.getNumOfElement());
             Scene backpackScene = new Scene(bpView);
             backpackStage.getIcons().add(new Image(Objects.requireNonNull(Controller.class.getResourceAsStream("/icon/backpack.png"))));
             backpackStage.setTitle("Backpack View");
@@ -141,18 +137,18 @@ public class Controller {
         return elementVBox;
     }
 
-    public static BackPack getSelectedItem(ArrayList<BackPack> backPacks, int row, int column) {
+    public static Individual getSelectedItem(ArrayList<? extends Individual> backPacks, int row, int column) {
         return backPacks.get((TOTAL_COLUMNS_BP + 1) * row + column);
     }
 
-    public static ImageView getRandomItem() {
+    public static VBox getRandomItem() {
         int ran = (int) (Math.random() * 20);
-        ImageView imageView = new ImageView(new Image(Objects.requireNonNull(Controller.class.getResourceAsStream("/img/" + PoolElements.getElements()[ran].getImageFile())), 100, 100, false, false));
-        return imageView;
-    }
-
-    public static ImageView wrapItemInImage(Element e){
-        ImageView imageView = new ImageView(new Image(Objects.requireNonNull(Controller.class.getResourceAsStream("/img/" + e.getImageFile())), 100, 100, false, false));
-        return imageView;
+        VBox item = new VBox();
+        item.getChildren().add(new ImageView(new Image(Objects.requireNonNull(Controller.class.getResourceAsStream("/img/" + PoolElements.getElements()[ran].getImageFile())), 100, 100, false, false)));
+        Label weight = new Label();
+        weight.setText("Weight: " + PoolElements.getElements()[ran].getWeight());
+        weight.setStyle("-fx-font-size: 14; -fx-font-weight: bold; -fx-background-color: white");
+        item.getChildren().add(weight);
+        return item;
     }
 }

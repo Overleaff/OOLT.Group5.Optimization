@@ -2,11 +2,9 @@ package algorithm;
 
 //import view.View;
 
-import model.BackPack;
-import model.Element;
-import model.Individual;
-import model.PoolElements;
+import model.*;
 import algorithm.PSO.Swarm;
+import view.View;
 
 import java.util.ArrayList;
 
@@ -35,6 +33,16 @@ public class PSOAlgorithm extends HeuristicAlgorithm {
             }
         }
         return bp2;
+    }
+
+    @Override
+    public Individual createIndividual() {
+        return new Particle();
+    }
+
+    @Override
+    public View getViewFile() {
+        return View.PSO;
     }
 
     public static ArrayList<String> run(BackPack bp1) {

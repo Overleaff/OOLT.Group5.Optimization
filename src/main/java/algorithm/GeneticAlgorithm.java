@@ -1,6 +1,8 @@
 package algorithm;
 
 import model.*;
+import view.View;
+import view.ViewSwitcher;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,6 +25,16 @@ public class GeneticAlgorithm extends HeuristicAlgorithm {
         return (BackPack) getPopVariable().getBestIndividual();
     }
 
+    @Override
+    public Individual createIndividual() {
+        return new BackPack();
+    }
+
+    @Override
+    public View getViewFile() {
+        return View.GENETIC;
+    }
+
     public static ArrayList<BackPack> crossOverStep(ArrayList<BackPack> population){
         ArrayList<BackPack> pop = population;
         Collections.sort(
@@ -33,6 +45,7 @@ public class GeneticAlgorithm extends HeuristicAlgorithm {
         }
         return pop;
     }
+
     public static void crossover(BackPack g1, BackPack g2) {
         // swap half of elements in g1 with half of elements in g2, number of elements in g1 equals to g2
         Element[] items1 = g1.getElements();
@@ -49,13 +62,13 @@ public class GeneticAlgorithm extends HeuristicAlgorithm {
             }
         }
     }
+
     public static ArrayList<BackPack> mutateStep(ArrayList<BackPack> population){
         ArrayList<BackPack> pop = population;
         for (int i = 0; i < Population.NUM_INDIVIDUAL / 2; i++)
             mutate(pop.get(i));
         return pop;
     }
-
 
     public static void mutate(BackPack bp) {
         // update randomly 1/10 elements in the backpack with the new element not in backpack before

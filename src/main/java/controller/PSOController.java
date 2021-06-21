@@ -1,5 +1,4 @@
 package controller;
 
-public class PSOController extends Controller{
-
+public class PSOController extends Controller {
 }

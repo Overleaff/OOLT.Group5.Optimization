@@ -1,7 +1,9 @@
-
 package controller;
 
+import algorithm.GeneticAlgorithm;
 import algorithm.HeuristicAlgorithm;
+import algorithm.HillClimbingAlgorithm;
+import algorithm.PSOAlgorithm;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -27,11 +29,7 @@ public class InitPopulationController extends Controller {
     private VBox generationsVBox = new VBox();
     @FXML
     private VBox poolVBox = new VBox();
-    private ArrayList<BackPack> initialPopulation = new ArrayList<>();
-
-    static {
-        population.initPopulation();
-    }
+    private ArrayList<Individual> initialPopulation = new ArrayList<>();
 
     @FXML
     public void initialize() {
@@ -41,38 +39,22 @@ public class InitPopulationController extends Controller {
 
     private void initializePopulation() {
         generationsVBox.getChildren().clear();
-        for (Individual i : population.getPopulation()) {
-            backPacks.add((BackPack) i);
-            initialPopulation.add((BackPack) i);
-        }
+        initialPopulation = population.getPopulation();
         updateGenerations(generationsVBox, initialPopulation);
-        bestInd = (BackPack) population.getBestIndividual();
+        bestInd = population.getBestIndividual();
         HeuristicAlgorithm.generationLevel++;
     }
 
-    private void reInitializePopulation() {
-
-    }
-
-    public void resetButtonClicked(ActionEvent event) {
+    public void resetButtonClicked() {
         population.getPopulation().clear();
-        backPacks.clear();
         initialPopulation.clear();
-        population.initPopulation();
+        population = h.initPopulation();
         HeuristicAlgorithm.generationLevel = 0;
         initializePopulation();
     }
 
-    public void geneticAlgorithmButtonClicked(ActionEvent actionEvent) {
-        ViewSwitcher.switchTo(View.GENETIC);
-    }
-
-    public void psoButtonClicked(ActionEvent actionEvent) {
-
-    }
-
-    public void hillClimbingButtonClicked(ActionEvent actionEvent) {
-        ViewSwitcher.switchTo(View.HILL_CLIMBING);
+    public void startSimulator(){
+        ViewSwitcher.switchTo(h.getViewFile());
     }
 
     private void addPoolElements(Element[] elements) {

@@ -24,33 +24,20 @@ public class Population {
         return resIndividual;
     }
 
-    public void initPopulation() {
-        for (int i = 0; i < Population.NUM_INDIVIDUAL; i++) {
-            population.add(new BackPack());
-        }
+    public void addIndividual(Individual i){
+        population.add(i);
     }
 
     public static boolean isSatisfy(Individual individual) {
         // kiểm tra xem (maxWeight - weight của bestIndividual) đã nhỏ hơn SATISFY_WEIGHT_LESS chưa,
         // nếu rồi thì return true; khong thì false
         double tmp = individual.MAX_WEIGHT - individual.getWeight();
-        System.out.println(tmp);
         return tmp <= SATISFY_WEIGHT_LESS && tmp >= 0;
     }
 
-    public static ArrayList<BackPack> toBackPackArrays(Population population){
-        ArrayList<BackPack> ans = new ArrayList<>();
-        for(Individual i : population.getPopulation()){
-            ans.add((BackPack) i);
-        }
-        return ans;
-    }
-
-    public void setPopulation(ArrayList<BackPack> population) {
-        int i = 0;
-        for(Individual individual : this.population) {
-            individual = population.get(i);
-            ++i;
+    public void setPopulation(ArrayList<BackPack> backPacks) {
+        for(BackPack bp: backPacks) {
+            this.population.set(backPacks.indexOf(bp), bp);
         }
     }
 }

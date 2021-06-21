@@ -4,7 +4,6 @@ public class BackPack implements Individual {
     private int numOfElement;
     private double weight;
     private Element[] elements = new Element[Element.MAX_ELEMENTS];
-    private Element[] poolElements = PoolElements.getElements();
     public static final int MAX = 10;
     public static final int MIN = 3;
 
@@ -35,22 +34,15 @@ public class BackPack implements Individual {
     public static int ranRange(int lowerRange, int upperRange){
         return (int)(Math.random()*(upperRange - lowerRange)) + lowerRange;
     }
-    public static void main(String[] args) {
-        BackPack bp = new BackPack();
-        Element[] elements = bp.getElements();
-        for (int i = 0; i < bp.numOfElement; i++) {
-            System.out.println(elements[i].getWeight() + " " + elements[i].getImageFile());
-        }
-    }
 
     //get new random element that not in Backpack yet
     public Element getNewRandomElement() {
         int ran = (int) (Math.random() * Element.MAX_ELEMENTS);
         int maxLoop = 0;
-        while (isContain(poolElements[ran]) && ++maxLoop < 10) {
+        while (isContain(PoolElements.getElements()[ran]) && ++maxLoop < 10) {
             ran = (int) (Math.random() * Element.MAX_ELEMENTS);
         }
-        return poolElements[ran];
+        return PoolElements.getElements()[ran];
     }
 
     public double getWeight() {

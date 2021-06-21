@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<StackPane alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.HillClimbingController">
+<StackPane alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.HillClimbingController">
     <children>
       <HBox fx:id="flyItem" StackPane.alignment="CENTER" />
         <BorderPane prefHeight="600.0" prefWidth="900.0">
@@ -17,11 +17,12 @@
                                 <Font name="System Italic" size="12.0" />
                             </font>
                         </Label>
-                        <Button fx:id="backButton" cancelButton="true" mnemonicParsing="false" onAction="#backButtonClicked" text="Back to Menu">
-                            <font>
-                                <Font size="14.0" />
-                            </font>
-                        </Button>
+                        <Button fx:id="backButton" cancelButton="true" mnemonicParsing="false" onAction="#backButtonClicked" text="Back to Menu" />
+                  <Button fx:id="finishButton" mnemonicParsing="false" onAction="#finishButtonClicked" text="Finish">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
                         <Button fx:id="solveButton" defaultButton="true" mnemonicParsing="false" onAction="#solveButtonClicked" text="Next">
                             <font>
                                 <Font size="14.0" />
@@ -33,20 +34,6 @@
                     </padding>
                 </HBox>
             </bottom>
-            <top>
-                <VBox BorderPane.alignment="CENTER">
-                    <children>
-                        <Label text="Hill Climbing Algorithm">
-                            <font>
-                                <Font name="System Bold" size="16.0" />
-                            </font>
-                        </Label>
-                    </children>
-                    <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                    </padding>
-                </VBox>
-            </top>
             <center>
                 <ScrollPane BorderPane.alignment="CENTER_RIGHT">
                     <content>
@@ -64,6 +51,22 @@
                     </padding>
                 </VBox>
             </right>
+         <top>
+            <HBox BorderPane.alignment="CENTER_LEFT">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+               <children>
+                  <Label text="Hill Climbing">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Pane HBox.hgrow="ALWAYS" />
+                  <Label fx:id="timeLabel" text="Label" />
+               </children>
+            </HBox>
+         </top>
         </BorderPane>
       <HBox fx:id="flyBackItem" StackPane.alignment="CENTER" />
     </children>

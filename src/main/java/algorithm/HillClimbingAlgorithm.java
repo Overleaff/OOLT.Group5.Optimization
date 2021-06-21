@@ -1,6 +1,7 @@
 package algorithm;
 
 import model.*;
+import view.View;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -72,5 +73,15 @@ public class HillClimbingAlgorithm extends HeuristicAlgorithm {
         // return new better state then update to this.bp
         bestNextState(this.bp, PoolElements.getElements());
         return this.bp;
+    }
+
+    @Override
+    public BackPack createIndividual() {
+        return new BackPack();
+    }
+
+    @Override
+    public View getViewFile() {
+        return View.HILL_CLIMBING;
     }
 }

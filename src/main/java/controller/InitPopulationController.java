@@ -42,14 +42,14 @@ public class InitPopulationController extends Controller {
         initialPopulation = population.getPopulation();
         updateGenerations(generationsVBox, initialPopulation);
         bestInd = population.getBestIndividual();
-        HeuristicAlgorithm.generationLevel++;
+        h.increaseGenerationLevel();
     }
 
     public void resetButtonClicked() {
         population.getPopulation().clear();
         initialPopulation.clear();
         population = h.initPopulation();
-        HeuristicAlgorithm.generationLevel = 0;
+        h.setGenerationLevel(0);
         initializePopulation();
     }
 

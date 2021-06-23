@@ -25,14 +25,14 @@ public class Controller {
     public static final int TOTAL_COLUMNS_BP = 4;
 
     public static void updateGenerations(VBox generationsVBox, ArrayList<? extends Individual> individuals) {
-        Label generationLabel = new Label("Generation " + HeuristicAlgorithm.generationLevel);
+        Label generationLabel = new Label("Generation " + h.getGenerationLevel());
         generationLabel.setStyle("-fx-font-size: 18; -fx-font-weight: bold");
         generationsVBox.getChildren().add(0, addBackpacksToGrid(individuals));
         generationsVBox.getChildren().add(0, generationLabel);
     }
 
     public static void updateGenerations(FlowPane generationsFlowPane, Individual individual) {
-        Label generationLabel = new Label("Generation " + HeuristicAlgorithm.generationLevel);
+        Label generationLabel = new Label("Generation " + h.getGenerationLevel());
         generationLabel.setStyle("-fx-font-size: 14; -fx-font-weight: bold");
         VBox backPackVBox = addBackpackToVBox(individual);
         backPackVBox.getChildren().add(0, generationLabel);

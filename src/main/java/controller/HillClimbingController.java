@@ -57,7 +57,7 @@ public class HillClimbingController extends Controller {
     }
 
     public void solveButtonClicked() {
-        if (HeuristicAlgorithm.generationLevel++ >= HeuristicAlgorithm.MAX_GENERATION || Population.isSatisfy(bestInd)) {
+        if (h.getGenerationLevel()+1 >= HeuristicAlgorithm.MAX_GENERATION || Population.isSatisfy(bestInd)) {
             solveButton.setDisable(true);
             finishButton.setDisable(true);
             updateStepLabel();
@@ -73,7 +73,7 @@ public class HillClimbingController extends Controller {
         long start = System.nanoTime();
         solveButton.setDisable(true);
         finishButton.setDisable(true);
-        while (!Population.isSatisfy(bestInd) && HeuristicAlgorithm.generationLevel++ < HeuristicAlgorithm.MAX_GENERATION) {
+        while (!Population.isSatisfy(bestInd) && h.getGenerationLevel()+1 < HeuristicAlgorithm.MAX_GENERATION) {
             bestInd = HillClimbingAlgorithm.bestNextState((BackPack) bestInd, PoolElements.getElements());
             updateGenerations(generationsFlowPane, bestInd);
         }
@@ -85,7 +85,7 @@ public class HillClimbingController extends Controller {
 
     private void updateStepLabel() {
         stepLabel.setText("");
-        if (HeuristicAlgorithm.generationLevel >= HeuristicAlgorithm.MAX_GENERATION)
+        if (h.getGenerationLevel() >= HeuristicAlgorithm.MAX_GENERATION)
             stepLabel.setText("Maximum generations reached.");
         if (!Population.isSatisfy(bestInd))
             stepLabel.setText(stepLabel.getText() + " " + "Best individual is not optimized.");
@@ -117,7 +117,7 @@ public class HillClimbingController extends Controller {
 
 
     public void backButtonClicked() {
-        HeuristicAlgorithm.generationLevel = 0;
+        h.setGenerationLevel(0);
         ViewSwitcher.switchTo(View.MAIN);
     }
 

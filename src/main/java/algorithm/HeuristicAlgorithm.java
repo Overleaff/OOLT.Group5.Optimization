@@ -6,7 +6,7 @@ import view.View;
 
 public abstract class HeuristicAlgorithm implements Algorithm{
     public static final int MAX_GENERATION = 20;
-    public static int generationLevel = 0;
+    private int generationLevel = 0;
     private Population population = new Population();
 
     public HeuristicAlgorithm() {
@@ -33,6 +33,18 @@ public abstract class HeuristicAlgorithm implements Algorithm{
             p.addIndividual(ind);
         }
         return p;
+    }
+
+    public int getGenerationLevel() {
+        return generationLevel;
+    }
+
+    public void increaseGenerationLevel(){
+        this.generationLevel++;
+    }
+
+    public void setGenerationLevel(int generationLevel){
+        this.generationLevel = generationLevel;
     }
 
     public Population getPopVariable(){

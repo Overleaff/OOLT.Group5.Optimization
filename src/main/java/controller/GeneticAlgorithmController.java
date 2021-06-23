@@ -16,7 +16,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.*;
@@ -25,7 +24,6 @@ import view.View;
 import view.ViewSwitcher;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -83,12 +81,14 @@ public class GeneticAlgorithmController extends Controller {
     }
 
     public void backButtonClicked(ActionEvent e) {
-        HeuristicAlgorithm.generationLevel = 0;
+        h.setGenerationLevel(0);
         ViewSwitcher.switchTo(View.MAIN);
     }
 
     public void solveButtonClicked() {
-        if (HeuristicAlgorithm.generationLevel++ >= HeuristicAlgorithm.MAX_GENERATION || Population.isSatisfy(population.getBestIndividual())) {
+        h.increaseGenerationLevel();
+        if (h.getGenerationLevel() >= HeuristicAlgorithm.MAX_GENERATION || Population.isSatisfy(population.getBestIndividual())) {
+
             solveButton.setDisable(true);
             finishButton.setDisable(true);
             updateBestIndividual(generationsVBox, population.getBestIndividual());
@@ -104,7 +104,8 @@ public class GeneticAlgorithmController extends Controller {
         long start = System.nanoTime();
         solveButton.setDisable(true);
         finishButton.setDisable(true);
-        while (!Population.isSatisfy(population.getBestIndividual()) && HeuristicAlgorithm.generationLevel++ < HeuristicAlgorithm.MAX_GENERATION) {
+        while (!Population.isSatisfy(population.getBestIndividual()) && h.getGenerationLevel()+1 < HeuristicAlgorithm.MAX_GENERATION) {
+            h.increaseGenerationLevel();
             backPacks = GeneticAlgorithm.crossOverStep(backPacks);
             backPacks = GeneticAlgorithm.mutateStep(backPacks);
             updateGenerations(generationsVBox, backPacks);
@@ -139,7 +140,7 @@ public class GeneticAlgorithmController extends Controller {
 
     private void updateStepLabel() {
         stepLabel.setText("");
-        if (HeuristicAlgorithm.generationLevel >= HeuristicAlgorithm.MAX_GENERATION)
+        if (h.getGenerationLevel() >= HeuristicAlgorithm.MAX_GENERATION)
             stepLabel.setText("Maximum generations reached.");
         if (!Population.isSatisfy(population.getBestIndividual()))
             stepLabel.setText(stepLabel.getText() + " " + "Best individual is not optimized.");

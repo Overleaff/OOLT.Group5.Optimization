@@ -144,7 +144,7 @@ public class HillClimbingController extends Controller {
     }
 
 
-    public static ImageView wrapItemInImage(Element e){
+    public ImageView wrapItemInImage(Element e){
         ImageView imageView = new ImageView(new Image(Objects.requireNonNull(Controller.class.getResourceAsStream("/img/" + e.getImageFile())), 100, 100, false, false));
         return imageView;
     }

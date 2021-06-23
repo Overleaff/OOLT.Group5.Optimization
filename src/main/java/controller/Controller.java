@@ -24,14 +24,14 @@ public class Controller {
     protected static Individual bestInd;
     public static final int TOTAL_COLUMNS_BP = 4;
 
-    public static void updateGenerations(VBox generationsVBox, ArrayList<? extends Individual> individuals) {
+    public void updateGenerations(VBox generationsVBox, ArrayList<? extends Individual> individuals) {
         Label generationLabel = new Label("Generation " + h.getGenerationLevel());
         generationLabel.setStyle("-fx-font-size: 18; -fx-font-weight: bold");
         generationsVBox.getChildren().add(0, addBackpacksToGrid(individuals));
         generationsVBox.getChildren().add(0, generationLabel);
     }
 
-    public static void updateGenerations(FlowPane generationsFlowPane, Individual individual) {
+    public void updateGenerations(FlowPane generationsFlowPane, Individual individual) {
         Label generationLabel = new Label("Generation " + h.getGenerationLevel());
         generationLabel.setStyle("-fx-font-size: 14; -fx-font-weight: bold");
         VBox backPackVBox = addBackpackToVBox(individual);
@@ -39,7 +39,7 @@ public class Controller {
         generationsFlowPane.getChildren().add(0, backPackVBox);
     }
 
-    public static void updateBestIndividual(VBox generationsVBox, Individual bestInd) {
+    public void updateBestIndividual(VBox generationsVBox, Individual bestInd) {
         Label resultLabel = new Label("Best individual:");
         resultLabel.setStyle("-fx-font-size: 18; -fx-font-weight: bold");
         Image backpackImage = new Image(Objects.requireNonNull(Controller.class.getResourceAsStream("/icon/backpack.png")), 120, 120, false, false);
@@ -60,7 +60,7 @@ public class Controller {
         generationsVBox.getChildren().add(0, resultLabel);
     }
 
-    public static void updateBestIndividual(FlowPane generationsFlowPane, Individual bestInd) {
+    public void updateBestIndividual(FlowPane generationsFlowPane, Individual bestInd) {
         Label resultLabel = new Label("Best individual:");
         resultLabel.setStyle("-fx-font-size: 14; -fx-font-weight: bold");
 
@@ -83,7 +83,7 @@ public class Controller {
         generationsFlowPane.getChildren().add(0, elementBox);
     }
 
-    public static GridPane addBackpacksToGrid(ArrayList<? extends Individual> individuals) {
+    public GridPane addBackpacksToGrid(ArrayList<? extends Individual> individuals) {
         GridPane elementsGridPane = new GridPane();
         elementsGridPane.setHgap(20);
         elementsGridPane.setVgap(10);
@@ -114,7 +114,7 @@ public class Controller {
         return elementsGridPane;
     }
 
-    public static VBox addBackpackToVBox(Individual individual) {
+    public VBox addBackpackToVBox(Individual individual) {
         VBox elementVBox = new VBox();
         elementVBox.setSpacing(10);
         elementVBox.setAlignment(Pos.CENTER);
@@ -137,11 +137,11 @@ public class Controller {
         return elementVBox;
     }
 
-    public static Individual getSelectedItem(ArrayList<? extends Individual> backPacks, int row, int column) {
+    public Individual getSelectedItem(ArrayList<? extends Individual> backPacks, int row, int column) {
         return backPacks.get((TOTAL_COLUMNS_BP + 1) * row + column);
     }
 
-    public static VBox getRandomItem() {
+    public VBox getRandomItem() {
         int ran = (int) (Math.random() * 20);
         VBox item = new VBox();
         item.getChildren().add(new ImageView(new Image(Objects.requireNonNull(Controller.class.getResourceAsStream("/img/" + PoolElements.getElements()[ran].getImageFile())), 100, 100, false, false)));

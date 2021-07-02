@@ -1,33 +1,33 @@
 package controller;
 
-import algorithm.GeneticAlgorithm;
-import algorithm.HillClimbingAlgorithm;
-import algorithm.PSOAlgorithm;
+import algorithm.*;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
 import view.View;
 import view.ViewSwitcher;
 
 import java.io.IOException;
 
 public class MainMenuController extends Controller {
+    @FXML
+    Button AlgorithmButton;
+    @FXML
+    HBox AlgorithmHBox;
 
-    public void next() {
-        population = h.initPopulation();
+    public Button createButtonForAlgorithm(){
+        Button b = new Button();
+        b.setText(h.getName());
+        b.setOnAction(e -> {
+            ViewSwitcher.switchTo(View.INIT);
+        });
+        return b;
+    }
+
+    @FXML
+    public void initialize(){
+        AlgorithmHBox.getChildren().add(createButtonForAlgorithm());
         ViewSwitcher.switchTo(View.INIT);
-    }
-
-    public void geneticAlgorithmButtonClicked() {
-        h = new GeneticAlgorithm();
-        next();
-    }
-
-    public void psoButtonClicked() {
-        //h = new PSOAlgorithm();
-        next();
-    }
-
-    public void hillClimbingButtonClicked() {
-        h = new HillClimbingAlgorithm();
-        next();
     }
 }

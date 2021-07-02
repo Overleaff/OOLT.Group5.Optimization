@@ -19,6 +19,11 @@ public class HillClimbingAlgorithm extends HeuristicAlgorithm {
         this.bp = (BackPack) getPopVariable().getBestIndividual();
     }
 
+    @Override
+    public String getName() {
+        return "Hill Climbing Algorithm";
+    }
+
     // return the Element with weight that closest to target and still < target
     private static Element binarySearch(double target, Element[] a) {
         int l = 0;

@@ -20,6 +20,11 @@ public class PSOAlgorithm extends HeuristicAlgorithm {
         abc = PSOAlgorithm.run(in);
     }
 
+    @Override
+    public String getName() {
+        return "Particle Swarm Optimization";
+    }
+
     public Individual doOtherSteps() {
         int tmp = this.getGenerationLevel();
         if (tmp > abc.size() - 1)

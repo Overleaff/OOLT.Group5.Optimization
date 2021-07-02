@@ -39,6 +39,8 @@ public abstract class HeuristicAlgorithm implements Algorithm{
         return generationLevel;
     }
 
+    public abstract String getName();
+
     public void increaseGenerationLevel(){
         this.generationLevel++;
     }

@@ -17,6 +17,11 @@ public class GeneticAlgorithm extends HeuristicAlgorithm {
         }
     }
 
+    @Override
+    public String getName() {
+        return "Genetic Algorithm";
+    }
+
     public BackPack doOtherSteps() {
         // sort individual theo fitness
         crossOverStep(this.population);

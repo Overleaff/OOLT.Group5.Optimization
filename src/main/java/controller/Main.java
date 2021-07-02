@@ -1,32 +1,28 @@
 package controller;
 
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
-import view.View;
-import view.ViewSwitcher;
+import algorithm.GeneticAlgorithm;
+import algorithm.HillClimbingAlgorithm;
+import algorithm.PSOAlgorithm;
+import model.BackPack;
 
-import java.util.Objects;
+import java.util.Scanner;
 
-public class Main extends Application {
+public class Main {
 
     public static void main(String[] args) {
-        launch(args);
+        Scanner s = new Scanner(System.in);
+
+        AlgorithmController a = new Visualization();
+
+        if(s.hasNext("Genetic")){
+            a.visualize(new GeneticAlgorithm());
+        }
+        else if(s.hasNext("HillClimbing")){
+            a.visualize(new HillClimbingAlgorithm());
+        }
+        else if(s.hasNext("PSO")){
+            a.visualize(new PSOAlgorithm(new BackPack()));
+        }
     }
 
-    @Override
-    public void start(Stage primaryStage) throws Exception{
-        var scene = new Scene(new Pane());
-
-        ViewSwitcher.setScene(scene);
-        ViewSwitcher.switchTo(View.MAIN);
-
-        primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/icon/mainicon.png"))));
-        primaryStage.setTitle("Evolutionary Algorithms Simulator");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-
-    }
 }

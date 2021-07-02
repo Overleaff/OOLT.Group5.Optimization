@@ -1,9 +1,11 @@
 package controller;
 
+import algorithm.Algorithm;
 import algorithm.HeuristicAlgorithm;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -19,10 +21,15 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Controller {
-    protected static HeuristicAlgorithm h;
+    protected static Algorithm a;
+    protected HeuristicAlgorithm h;
     protected static Population population = new Population();
     protected static Individual bestInd;
     public static final int TOTAL_COLUMNS_BP = 4;
+
+    public Controller(){
+        this.h = (HeuristicAlgorithm) a;
+    }
 
     public void updateGenerations(VBox generationsVBox, ArrayList<? extends Individual> individuals) {
         Label generationLabel = new Label("Generation " + h.getGenerationLevel());

@@ -55,7 +55,6 @@ public class GeneticAlgorithmController extends Controller {
         for (Individual i : population.getPopulation()) {
             backPacks.add((BackPack) i);
         }
-
     }
 
     private static Node getSelectedNode(int index) {
